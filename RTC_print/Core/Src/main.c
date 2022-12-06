@@ -102,19 +102,17 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_UART_Init(&huart1);
-
   RTC_TimeTypeDef sTime;
   RTC_DateTypeDef sDate;
 
-   static char toggle[4]={0,};
-   static uint32_t tick_Seconds=0;
+   //static char toggle[4]={0,};
+   //static uint32_t tick_Seconds=0;
 
    HAL_RTC_GetTime(&hrtc,&sTime,RTC_FORMAT_BIN);
-   tick_Seconds=sTime.Seconds;
+   //tick_Seconds=sTime.Seconds;
 
   /* USER CODE END 2 */
-  char uart_buf;
+  //char uart_buf;
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

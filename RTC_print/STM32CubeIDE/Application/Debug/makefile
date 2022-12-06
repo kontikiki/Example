@@ -13,11 +13,6 @@ RM := rm -rf
 -include Drivers/CMSIS/subdir.mk
 -include Application/User/Startup/subdir.mk
 -include Application/User/Core/subdir.mk
--include Application/Debug/Drivers/STM32F4xx_HAL_Driver/subdir.mk
--include Application/Debug/Drivers/CMSIS/subdir.mk
--include Application/Debug/Application/User/Startup/subdir.mk
--include Application/Debug/Application/User/Core/subdir.mk
--include Application/Debug/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
