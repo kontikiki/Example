@@ -1,0 +1,10 @@
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:60:5:__io_putchar	16	static
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:86:5:main	8	static
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:159:6:SystemClock_Config	88	static
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:211:13:MX_NVIC_Init	8	static
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:223:13:MX_ADC1_Init	24	static
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:303:13:MX_USART1_UART_Init	8	static
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:336:13:MX_GPIO_Init	16	static
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:347:6:HAL_ADC_ConvCpltCallback	24	static
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:393:6:HAL_UART_RxCpltCallback	16	static
+C:/Users/user/STM32Cube/Example/ADC_UART_simpleOne/Core/Src/main.c:411:6:Error_Handler	4	static,ignoring_inline_asm
