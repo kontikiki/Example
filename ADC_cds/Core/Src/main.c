@@ -45,6 +45,15 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
+int adcVal[4];
+int i=0;
+
+int __io_putchar (int ch)
+{
+  (void)HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, 100);
+  return ch;
+}
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,13 +105,31 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-
+  //HAL_ADC_Start_IT(&hadc1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
+	  HAL_ADC_Start(&hadc1);
+	  HAL_ADC_PollForConversion(&hadc1,HAL_MAX_DELAY);
+	  adcVal[i] = HAL_ADC_GetValue(&hadc1);
+	  printf("%d ",adcVal[i]);
+
+	  if(i==3)
+	  	{
+	  		printf("\r\n");
+	  		HAL_ADC_Stop(&hadc1);
+	  	}
+
+	  	i++;
+
+
+	  	if(i>3)
+	  		i=0;
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -304,7 +331,27 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/*
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+	adcVal[i] = HAL_ADC_GetValue(&hadc1);
+	printf("%d ",adcVal[i]);
 
+	if(i==3)
+	{
+		printf("\r\n");
+		//HAL_ADC_Stop(&hadc1);
+	}
+
+	i++;
+
+
+	if(i>3)
+		i=0;
+
+  HAL_ADC_Start_IT(&hadc1);
+}
+*/
 /* USER CODE END 4 */
 
 /**

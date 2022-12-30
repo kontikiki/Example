@@ -1,0 +1,12 @@
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:57:5:__io_putchar	16	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:65:6:HAL_ADC_ConvHalfCpltCallback	16	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:71:6:HAL_ADC_ConvCpltCallback	16	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:114:5:main	8	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:171:6:SystemClock_Config	88	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:223:13:MX_NVIC_Init	8	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:241:13:MX_ADC1_Init	24	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:320:13:MX_TIM2_Init	32	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:365:13:MX_USART1_UART_Init	8	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:396:13:MX_DMA_Init	16	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:409:13:MX_GPIO_Init	16	static
+C:/Users/user/STM32Cube/Example/ADC_DMA_TRIGGER/Core/Src/main.c:461:6:Error_Handler	4	static,ignoring_inline_asm
