@@ -1,0 +1,7 @@
+C:/Users/user/STM32Cube/Example/ssd1306_spi/Core/Src/main.c:61:6:init	4	static
+C:/Users/user/STM32Cube/Example/ssd1306_spi/Core/Src/main.c:65:6:loop	8	static
+C:/Users/user/STM32Cube/Example/ssd1306_spi/Core/Src/main.c:82:5:main	8	static
+C:/Users/user/STM32Cube/Example/ssd1306_spi/Core/Src/main.c:126:6:SystemClock_Config	88	static
+C:/Users/user/STM32Cube/Example/ssd1306_spi/Core/Src/main.c:179:13:MX_SPI1_Init	8	static
+C:/Users/user/STM32Cube/Example/ssd1306_spi/Core/Src/main.c:217:13:MX_GPIO_Init	40	static
+C:/Users/user/STM32Cube/Example/ssd1306_spi/Core/Src/main.c:251:6:Error_Handler	4	static,ignoring_inline_asm

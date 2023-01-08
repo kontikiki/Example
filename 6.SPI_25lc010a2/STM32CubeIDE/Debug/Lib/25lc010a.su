@@ -1,0 +1,9 @@
+../Lib/25lc010a.c:16:6:EEPROM_Init	24	static
+../Lib/25lc010a.c:23:6:EEPROM_WriteEnable	16	static
+../Lib/25lc010a.c:33:6:EEPROM_ReadByte	24	static
+../Lib/25lc010a.c:45:6:EEPROM_ReadBuffer	24	static
+../Lib/25lc010a.c:55:6:EEPROM_WriteByte	24	static
+../Lib/25lc010a.c:70:6:EEPROM_WriteBuffer	24	static
+../Lib/25lc010a.c:103:6:EEPROM_EraseAll	16	static
+../Lib/25lc010a.c:130:13:SS_Select	8	static
+../Lib/25lc010a.c:136:13:SS_Deselect	8	static
