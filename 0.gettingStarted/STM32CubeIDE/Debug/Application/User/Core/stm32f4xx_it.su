@@ -1,0 +1,2 @@
+C:/Users/user/STM32Cube/Example/gettingStarted/Core/Src/stm32f4xx_it.c:73:6:SysTick_Handler	8	static
+C:/Users/user/STM32Cube/Example/gettingStarted/Core/Src/stm32f4xx_it.c:94:6:EXTI0_IRQHandler	8	static

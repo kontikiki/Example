@@ -1,0 +1,4 @@
+C:/Users/user/STM32Cube/Example/PWM_simple/Core/Src/stm32f4xx_hal_msp.c:65:6:HAL_MspInit	16	static
+C:/Users/user/STM32Cube/Example/PWM_simple/Core/Src/stm32f4xx_hal_msp.c:87:6:HAL_TIM_Base_MspInit	24	static
+C:/Users/user/STM32Cube/Example/PWM_simple/Core/Src/stm32f4xx_hal_msp.c:103:6:HAL_TIM_MspPostInit	40	static
+C:/Users/user/STM32Cube/Example/PWM_simple/Core/Src/stm32f4xx_hal_msp.c:135:6:HAL_TIM_Base_MspDeInit	16	static

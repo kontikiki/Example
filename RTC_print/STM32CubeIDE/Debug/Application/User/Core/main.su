@@ -1,0 +1,7 @@
+C:/Users/user/STM32Cube/Example/RTC_print/Core/Src/main.c:49:5:_write	24	static
+C:/Users/user/STM32Cube/Example/RTC_print/Core/Src/main.c:77:5:main	56	static
+C:/Users/user/STM32Cube/Example/RTC_print/Core/Src/main.c:169:6:SystemClock_Config	88	static
+C:/Users/user/STM32Cube/Example/RTC_print/Core/Src/main.c:222:13:MX_RTC_Init	32	static
+C:/Users/user/STM32Cube/Example/RTC_print/Core/Src/main.c:285:13:MX_USART1_UART_Init	8	static
+C:/Users/user/STM32Cube/Example/RTC_print/Core/Src/main.c:318:13:MX_GPIO_Init	40	static
+C:/Users/user/STM32Cube/Example/RTC_print/Core/Src/main.c:347:6:Error_Handler	4	static,ignoring_inline_asm

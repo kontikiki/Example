@@ -1,0 +1,5 @@
+C:/Users/user/STM32Cube/Example/SPI_25lc010a2/Core/Src/main.c:67:5:main	16	static
+C:/Users/user/STM32Cube/Example/SPI_25lc010a2/Core/Src/main.c:123:6:SystemClock_Config	88	static
+C:/Users/user/STM32Cube/Example/SPI_25lc010a2/Core/Src/main.c:176:13:MX_SPI2_Init	8	static
+C:/Users/user/STM32Cube/Example/SPI_25lc010a2/Core/Src/main.c:214:13:MX_GPIO_Init	48	static
+C:/Users/user/STM32Cube/Example/SPI_25lc010a2/Core/Src/main.c:244:6:Error_Handler	4	static,ignoring_inline_asm
