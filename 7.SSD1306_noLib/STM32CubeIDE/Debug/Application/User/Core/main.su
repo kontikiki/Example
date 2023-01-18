@@ -1,0 +1,16 @@
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:167:6:CS_Select	8	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:172:6:CS_Deselect	8	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:177:6:Data_Select	8	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:182:6:Command_Select	8	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:187:6:byteTransmit	16	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:193:6:initDisplay	8	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:202:6:displayBuffer	8	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:213:6:plotPoint	32	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:227:6:moveTo	16	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:232:6:drawTo	40	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:261:5:main	16	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:339:6:SystemClock_Config	88	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:392:13:MX_ADC1_Init	24	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:445:13:MX_SPI2_Init	8	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:483:13:MX_GPIO_Init	48	static
+C:/Users/user/STM32Cube/Example/SSD1306_noLib/Core/Src/main.c:513:6:Error_Handler	4	static,ignoring_inline_asm

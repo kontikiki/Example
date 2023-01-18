@@ -1,5 +1,5 @@
 Drivers/CMSIS/system_stm32f4xx.o: \
- C:/Users/user/STM32Cube/Example/SPI_ADC_SSD1306_5/Core/Src/system_stm32f4xx.c \
+ C:/Users/user/STM32Cube/Example/7.SPI_ADC_SSD1306_5/Core/Src/system_stm32f4xx.c \
  ../../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  ../../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h \
  ../../Drivers/CMSIS/Include/core_cm4.h \

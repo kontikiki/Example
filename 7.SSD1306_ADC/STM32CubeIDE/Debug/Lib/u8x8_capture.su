@@ -1,0 +1,6 @@
+../Lib/u8x8_capture.c:45:9:u8x8_capture_get_pixel_1	24	static
+../Lib/u8x8_capture.c:61:9:u8x8_capture_get_pixel_2	24	static
+../Lib/u8x8_capture.c:75:6:u8x8_capture_write_pbm_pre	16	static
+../Lib/u8x8_capture.c:85:6:u8x8_capture_write_pbm_buffer	40	static
+../Lib/u8x8_capture.c:111:6:u8x8_capture_write_xbm_pre	16	static
+../Lib/u8x8_capture.c:122:6:u8x8_capture_write_xbm_buffer	48	static

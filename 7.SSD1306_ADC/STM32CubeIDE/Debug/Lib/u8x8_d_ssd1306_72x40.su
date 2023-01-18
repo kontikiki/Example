@@ -1,0 +1,2 @@
+../Lib/u8x8_d_ssd1306_72x40.c:155:16:u8x8_d_ssd1306_72x40_generic	32	static
+../Lib/u8x8_d_ssd1306_72x40.c:250:9:u8x8_d_ssd1306_72x40_er	24	static

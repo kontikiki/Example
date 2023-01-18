@@ -62,8 +62,8 @@ all: main-build
 main-build: SPI_ADC_SSD1306_5.elf secondary-outputs
 
 # Tool invocations
-SPI_ADC_SSD1306_5.elf SPI_ADC_SSD1306_5.map: $(OBJS) $(USER_OBJS) C:\Users\user\STM32Cube\Example\SPI_ADC_SSD1306_5\STM32CubeIDE\STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "SPI_ADC_SSD1306_5.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\user\STM32Cube\Example\SPI_ADC_SSD1306_5\STM32CubeIDE\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPI_ADC_SSD1306_5.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+SPI_ADC_SSD1306_5.elf SPI_ADC_SSD1306_5.map: $(OBJS) $(USER_OBJS) C:\Users\user\STM32Cube\Example\7.SPI_ADC_SSD1306_5\STM32CubeIDE\STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "SPI_ADC_SSD1306_5.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\user\STM32Cube\Example\7.SPI_ADC_SSD1306_5\STM32CubeIDE\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPI_ADC_SSD1306_5.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

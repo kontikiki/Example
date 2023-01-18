@@ -1,5 +1,5 @@
 Application/User/Core/main.o: \
- C:/Users/user/STM32Cube/Example/SPI_ADC_SSD1306_5/Core/Src/main.c \
+ C:/Users/user/STM32Cube/Example/7.SPI_ADC_SSD1306_5/Core/Src/main.c \
  ../../Core/Inc/main.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../../Core/Inc/stm32f4xx_hal_conf.h \
@@ -30,8 +30,8 @@ Application/User/Core/main.o: \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
- C:/Users/user/STM32Cube/Example/SPI_ADC_SSD1306_5/STM32CubeIDE/u8g2/u8g2.h \
- C:/Users/user/STM32Cube/Example/SPI_ADC_SSD1306_5/STM32CubeIDE/u8g2/u8x8.h
+ C:/Users/user/STM32Cube/Example/7.SPI_ADC_SSD1306_5/STM32CubeIDE/u8g2/u8g2.h \
+ C:/Users/user/STM32Cube/Example/7.SPI_ADC_SSD1306_5/STM32CubeIDE/u8g2/u8x8.h
 ../../Core/Inc/main.h:
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../../Core/Inc/stm32f4xx_hal_conf.h:
@@ -62,5 +62,5 @@ Application/User/Core/main.o: \
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h:
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
-C:/Users/user/STM32Cube/Example/SPI_ADC_SSD1306_5/STM32CubeIDE/u8g2/u8g2.h:
-C:/Users/user/STM32Cube/Example/SPI_ADC_SSD1306_5/STM32CubeIDE/u8g2/u8x8.h:
+C:/Users/user/STM32Cube/Example/7.SPI_ADC_SSD1306_5/STM32CubeIDE/u8g2/u8g2.h:
+C:/Users/user/STM32Cube/Example/7.SPI_ADC_SSD1306_5/STM32CubeIDE/u8g2/u8x8.h:

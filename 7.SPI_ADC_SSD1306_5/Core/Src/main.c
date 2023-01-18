@@ -52,8 +52,17 @@ SPI_HandleTypeDef hspi2;
 /* USER CODE BEGIN PV */
 const uint8_t sndBuff[]="VOLTAGE:";
 
-uint16_t adcVal=0;
+float adcVal=0;
 char buffer[5];
+typedef struct _point
+  {
+	  int x;
+	  int y;
+  }Point;
+
+int i=1;
+Point point[128];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +78,7 @@ static void MX_SPI2_Init(void);
 /* USER CODE BEGIN 0 */
 #define bitmap_width 128
 #define bitmap_height 64
-static unsigned char bitmap[128*64]=
+static unsigned char bitmap[128*8]=
 		{
 				0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
 						0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -186,77 +195,82 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  typedef struct _point
-  {
-	  int x;
-	  int y;
-  }Point;
-
-  int i=1;
-  Point point[128];
-
+  point[0].x=0;
+  point[0].y=127;
 
   while (1)
   {
+
 
 	  u8g2_FirstPage(&u8g2);
 
 
 	  point[0].x=0;
-	  point[0].y=64;
+	  point[0].y=point[127].y;
 
 	  do
 	  {
+
+
 		  HAL_ADC_Start(&hadc1);
 		  HAL_ADC_PollForConversion(&hadc1,HAL_MAX_DELAY);
 		  adcVal = HAL_ADC_GetValue(&hadc1);
 
-		  int pixel_y=adcVal*64/4096;
+		  int pixel_y=(int)adcVal*64/4096;
 		  point[i].x=i;
 		  point[i].y=64-pixel_y;
 
+		  float voltage_y=adcVal*(3.3)/4096.0;
 
-		  itoa(adcVal,buffer,10);
+		  int char_y=100.0*voltage_y;
 
+		  int hundred_y=char_y/100;
+		  int ten_y=char_y/10-(hundred_y*10);
+		  int one_y=char_y-hundred_y*100-ten_y*10;
 
+		  buffer[0]='0'+hundred_y;
+		  buffer[1]='.';
+		  buffer[2]='0'+ten_y;
+		  buffer[3]='0'+one_y;
 
-	  	  	u8g2_SetFont(&u8g2,u8g2_font_5x7_tr);
-	  	  	u8g2_DrawStrX2(&u8g2,0,60,buffer);
+	  	  u8g2_SetFont(&u8g2,u8g2_font_5x7_tr);
+	  	  u8g2_DrawStrX2(&u8g2,0,15,buffer);
 
-	  	  	for(int j=1;j<=i;j++)
-	  	  	{
-	  	  		u8g2_DrawLine(&u8g2,point[j-1].x,point[j-1].y,point[j].x,point[j].y);
-	  	  	}
+	  	  for(int j=0;j<i;j++)
+	  	  {
+	  	  	u8g2_DrawLine(&u8g2,point[j].x,point[j].y,point[j+1].x,point[j+1].y);
+	  	  }
 
-	  		i++;
+	  	  i++;
 	  		//HAL_Delay(50);
-	  		if(i==128)
-	  		{
-	  			i=1;
-	  			break;
-	  		}
+	  	  if(i==128)
+	  	  {
+	  		  i=0;
+	  		  break;
+	  	  }
 
 
  }while (u8g2_NextPage(&u8g2));
+	  //}while(1);
 
 
+/*
 
-	  /*
 	  u8g2_FirstPage(&u8g2);
-	  	  	do
+	  	  	while(1)
 	  	  		{
-	  	  			u8g2_ClearBuffer(&u8g2);
-	  	  			u8g2_SetDrawColor(&u8g2,1);
-	  	  			u8g2_SetBitmapMode(&u8g2,1);
+	  	  			//u8g2_ClearBuffer(&u8g2);
+	  	  			//u8g2_SetDrawColor(&u8g2,1);
+	  	  			//u8g2_SetBitmapMode(&u8g2,1);
 	  	  			u8g2_DrawBitmap(&u8g2, 0, 0, 16, bitmap_height,  bitmap);
+
 	  	  			//u8g2_SetFont(&u8g2,u8g2_font_5x7_tr);
 	  	  			//u8g2_DrawStrX2(&u8g2,0,30,sndBuff);
 	  	  			//u8g2_DrawStrX2(&u8g2,0,60,buffer);
 
 	  	  		} while (u8g2_NextPage(&u8g2));
-	   */
-
+	  	  		//}
+*/
 	  /* USER CODE END WHILE */
 
 	     /* USER CODE BEGIN 3 */

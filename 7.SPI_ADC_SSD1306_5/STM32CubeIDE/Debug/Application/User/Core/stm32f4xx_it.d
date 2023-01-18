@@ -1,5 +1,5 @@
 Application/User/Core/stm32f4xx_it.o: \
- C:/Users/user/STM32Cube/Example/SPI_ADC_SSD1306_5/Core/Src/stm32f4xx_it.c \
+ C:/Users/user/STM32Cube/Example/7.SPI_ADC_SSD1306_5/Core/Src/stm32f4xx_it.c \
  ../../Core/Inc/main.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../../Core/Inc/stm32f4xx_hal_conf.h \

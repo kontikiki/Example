@@ -1,5 +1,5 @@
 Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_cortex.o: \
- C:/Users/user/STM32Cube/Example/SPI_ADC_SSD1306_5/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c \
+ C:/Users/user/STM32Cube/Example/7.SPI_ADC_SSD1306_5/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../../Core/Inc/stm32f4xx_hal_conf.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \

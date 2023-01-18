@@ -1,0 +1,3 @@
+../Lib/u8x8_d_st7571.c:83:16:u8x8_d_st7571_generic	32	static
+../Lib/u8x8_d_st7571.c:245:9:u8x8_d_st7571_128x128	24	static
+../Lib/u8x8_d_st7571.c:344:9:u8x8_d_st7571_128x96	24	static

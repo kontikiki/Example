@@ -1,0 +1,2 @@
+../Lib/u8g2_intersection.c:123:9:u8g2_is_intersection_decision_tree	16	static
+../Lib/u8g2_intersection.c:166:9:u8g2_IsIntersection	24	static

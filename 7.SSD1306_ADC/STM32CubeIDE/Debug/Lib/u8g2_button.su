@@ -1,0 +1,2 @@
+../Lib/u8g2_button.c:98:6:u8g2_DrawButtonFrame	56	static
+../Lib/u8g2_button.c:171:6:u8g2_DrawButtonUTF8	48	static
