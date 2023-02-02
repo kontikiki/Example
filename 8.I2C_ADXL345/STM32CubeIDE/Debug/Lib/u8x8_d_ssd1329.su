@@ -1,0 +1,5 @@
+../Lib/u8x8_d_ssd1329.c:129:17:u8x8_ssd1329_8to32	32	static
+../Lib/u8x8_d_ssd1329.c:162:16:u8x8_d_ssd1329_128x96_generic	40	static
+../Lib/u8x8_d_ssd1329.c:288:9:u8x8_d_ssd1329_128x96_noname	24	static
+../Lib/u8x8_d_ssd1329.c:379:16:u8x8_d_ssd1329_96x96_generic	40	static
+../Lib/u8x8_d_ssd1329.c:505:9:u8x8_d_ssd1329_96x96_noname	24	static
