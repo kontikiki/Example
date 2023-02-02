@@ -1,5 +1,5 @@
 Application/User/Core/stm32f4xx_hal_msp.o: \
- C:/Users/user/STM32Cube/Example/UART_polling_interrupt/Core/Src/stm32f4xx_hal_msp.c \
+ C:/Users/user/STM32Cube/Example/3.UART_polling_interrupt/Core/Src/stm32f4xx_hal_msp.c \
  ../../Core/Inc/main.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../../Core/Inc/stm32f4xx_hal_conf.h \

@@ -196,7 +196,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   point[0].x=0;
-  point[0].y=127;
+  point[0].y=63;
 
   while (1)
   {

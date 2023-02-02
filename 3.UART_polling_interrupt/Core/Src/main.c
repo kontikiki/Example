@@ -23,19 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-/*
-#define MAX_BUFFER_SIZE    (255)
 
-typedef struct {
-  uint8_t head;
-  uint8_t tail;
-  uint8_t buffer[MAX_BUFFER_SIZE];
-}uart_t;
-
-void push(uart_t*, uint8_t);
-uint8_t pop(uart_t*);
-uint8_t isEmpty(uart_t*);
-*/
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,16 +55,7 @@ int __io_putchar (int ch)
   (void)HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, 100);
   return ch;
 }
-/*
-#ifdef __cplusplus
-extern "C" int _write(int32_t file, uint8_t *ptr, int32_t len) {
-#else
-int _write(int32_t file, uint8_t *ptr, int32_t len) {
-#endif
-    if( HAL_UART_Transmit(&huart1, ptr, len, len) == HAL_OK ) return len;
-    else return 0;
-}
-*/
+
 
 
 /* USER CODE BEGIN PV */
@@ -95,76 +74,6 @@ static void MX_NVIC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//#define get_dma_data_length() huart1.hdmarx->Instance->NDTR
-//#define get_dma_total_size()  huart1.RxXferSize
-
-/*
-void uart_rx_dma_handler(){
-	//dma 버퍼에서 이미 가져온 데이터의 위치를 저장할 변수
-	static uint32_t old_pos=0;
-	//dma 버퍼에 현재 데이터가 채워진 위치를 저장할 변수
-	uint32_t pos;
-
-	//dma 버퍼에서 가져다 저장할 변수
-	uint8_t rx_buf[DMA_BUF_SIZE];
-	//uint32_t rx_size;
-
-	//가져온 데이터를 출력하기 위한 변수들
-	uint8_t ch;
-	uint8_t i;
-
-    //DMA 버퍼에서 가져온 데이터의 크기를 저장할 변수
-	rx_size = 0;
-
-	//dma 버퍼에 데이터가 채워진 위치 얻기
-	pos = get_dma_total_size() - get_dma_data_length();
-
-	//이전 위치와 현재 위치가 다르다면... (처리할 데이터가 있다)
-	if(pos != old_pos) {
-		//현재 위치가 이전에 저장한 위치보다 크다면 보통의 상황으로 이전 위치부터 현재위치까지 DMA 버퍼에서 데이터 가져옴.
-		if(pos > old_pos) {
-            //memcpy를 사용하려면 #include "string.h" 필요
-			memcpy(rx_buf, &rx_dma_buf[old_pos], pos - old_pos);
-
-			// DMA 버퍼에서 가져온 데이터 크기 저장
-			rx_size += pos - old_pos;
-		} else {
-			//현재 위치가 이전 위치보다 아래에 존재한다면 DMA 버퍼가 한바퀴가 넘어간 상태(Overflow)
-			//일단 이전에 가져온 위치부터 버퍼의 끝까지 모두 가져온다.
-			memcpy(rx_buf, &rx_dma_buf[old_pos], get_dma_total_size() - old_pos);
-			// 가져온 데이터 크기 저장.
-			rx_size += get_dma_total_size() - old_pos;
-
-
-			//끝까지 다 가져왔는데
-            //현재 위치가 0보다 크다면 추가로 가져가야할 것이 있다는 얘기임
-            //DMA 버퍼의 0번째부터 현재 위치까지 추가로 가져옴.
-			if(pos > 0){
-                //rx_buf 위치 주의!!
-				memcpy(&rx_buf[get_dma_total_size() - old_pos], &rx_dma_buf[0], pos);
-				// 추가로 가져온 데이터 크기 추가
-				rx_size += pos;
-			}
-		}
-		//현재 위치를 이전위치로 변경
-		old_pos = pos;
-
-		//가져온 데이터가 있다면
-		if(rx_size > 0) {
-			//크기 만큼 루프 출력!
-			for(i = 0;i<rx_size;i++) {
-				ch = rx_buf[i];
-                // printf는 #include "stdio.h" 가 필요하고 기타적인 처리부분은 생략한다.
-				printf("%c", ch);
-                // 할 것! (to do?)
-				//if(ch=='\n')
-				//	printf("\n");
-			}
-			//printf("\n");
-		}
-	}
-}
-*/
 
 /* USER CODE END 0 */
 
@@ -202,11 +111,8 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
- // init_uart(&uartBuffer);
-  setbuf(stdout,NULL);
-  //HAL_UART_Receive_DMA(&huart1, rx_dma_buf, DMA_BUF_SIZE);
 
-  HAL_UART_Receive_IT(&huart1,RxBuffer+i,1);
+  HAL_UART_Receive_IT(&huart1,RxBuffer,1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -216,6 +122,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	  /*
 	  if(RxBuffer[i]=='\n')
 	  {
 		  printf("%s",RxBuffer);
@@ -226,13 +134,7 @@ int main(void)
 		  i=0;
 	  }
 
-	  /*
-	  if (isEmpty(&uartBuffer) == 0) {
-	       data = pop(&uartBuffer);
-	       HAL_UART_Transmit(&huart1,&data,1,5000);
-	     }
 */
-	  //uart_rx_dma_handler();
 
 /*
 	  if(HAL_UART_Receive(&huart1, (uint8_t*)RxBuffer,1, 5000)== HAL_OK)
@@ -382,52 +284,17 @@ static void MX_GPIO_Init(void)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 
-	if (huart->Instance == huart1.Instance) {
-	//    push(&uartBuffer, rxData);
-		i++;
-	    HAL_UART_Receive_IT(&huart1, RxBuffer+i, 1);
+	HAL_UART_Transmit(&huart1,RxBuffer,1,5000);
+	//AL_UART_Receive_IT(&huart1, RxBuffer, 1);
 
-	  }
+	/*if (huart->Instance == huart1.Instance) {
+		i++;
+	    HAL_UART_Receive_IT(&huart1, RxBuffer, 1);
+
+	  }*/
+
 	//HAL_UART_Transmit(&huart1,RxBuffer,10,5000);
 }
-/*
-
-void init_uart(uart_t* u)
-{
-  u->head = 0;
-  u->tail = 0;
-  memset(u->buffer, 0, sizeof(u->buffer));
-}
-
-void push(uart_t* u, uint8_t data)
-{
-  u->buffer[u->head] = data;
-
-  u->head++;
-
-  if (u->head >= MAX_BUFFER_SIZE) {
-    u->head = 0;
-  }
-}
-
-uint8_t pop(uart_t* u)
-{
-  uint8_t data = u->buffer[u->tail];
-
-  u->tail++;
-
-  if (u->tail >= MAX_BUFFER_SIZE) {
-    u->tail = 0;
-  }
-
-  return data;
-}
-
-uint8_t isEmpty(uart_t* u)
-{
-  return u->head == u->tail;
-}
-*/
 
 /* USER CODE END 4 */
 
