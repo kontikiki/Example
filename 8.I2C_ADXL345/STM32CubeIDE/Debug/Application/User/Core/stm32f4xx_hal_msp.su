@@ -1,7 +1,7 @@
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:63:6:HAL_MspInit	16	static
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:85:6:HAL_I2C_MspInit	48	static
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:121:6:HAL_I2C_MspDeInit	16	static
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:152:6:HAL_SPI_MspInit	48	static
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:196:6:HAL_SPI_MspDeInit	16	static
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:227:6:HAL_UART_MspInit	48	static
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:263:6:HAL_UART_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:63:6:HAL_MspInit	16	static
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:85:6:HAL_I2C_MspInit	48	static
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:121:6:HAL_I2C_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:152:6:HAL_SPI_MspInit	48	static
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:196:6:HAL_SPI_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:227:6:HAL_UART_MspInit	48	static
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/Core/Src/stm32f4xx_hal_msp.c:263:6:HAL_UART_MspDeInit	16	static

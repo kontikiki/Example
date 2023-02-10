@@ -1,0 +1,7 @@
+C:/Users/user/STM32Cube/Example/RTCADC/Core/Src/stm32f4xx_hal_msp.c:63:6:HAL_MspInit	16	static
+C:/Users/user/STM32Cube/Example/RTCADC/Core/Src/stm32f4xx_hal_msp.c:85:6:HAL_DAC_MspInit	48	static
+C:/Users/user/STM32Cube/Example/RTCADC/Core/Src/stm32f4xx_hal_msp.c:118:6:HAL_DAC_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/RTCADC/Core/Src/stm32f4xx_hal_msp.c:146:6:HAL_RTC_MspInit	64	static
+C:/Users/user/STM32Cube/Example/RTCADC/Core/Src/stm32f4xx_hal_msp.c:179:6:HAL_RTC_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/RTCADC/Core/Src/stm32f4xx_hal_msp.c:201:6:HAL_UART_MspInit	48	static
+C:/Users/user/STM32Cube/Example/RTCADC/Core/Src/stm32f4xx_hal_msp.c:237:6:HAL_UART_MspDeInit	16	static

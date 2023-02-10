@@ -1,5 +1,5 @@
 Application/User/Core/main.o: \
- C:/Users/user/STM32Cube/Example/I2C_ADXL345/Core/Src/main.c \
+ C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/Core/Src/main.c \
  ../../Core/Inc/main.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../../Core/Inc/stm32f4xx_hal_conf.h \
@@ -30,9 +30,9 @@ Application/User/Core/main.o: \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- C:/Users/user/STM32Cube/Example/I2C_ADXL345/STM32CubeIDE/Lib/u8g2.h \
- C:/Users/user/STM32Cube/Example/I2C_ADXL345/STM32CubeIDE/Lib/u8x8.h \
- C:/Users/user/STM32Cube/Example/I2C_ADXL345/STM32CubeIDE/Lib/adxl345.h
+ C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/STM32CubeIDE/Lib/u8g2.h \
+ C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/STM32CubeIDE/Lib/u8x8.h \
+ C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/STM32CubeIDE/Lib/adxl345.h
 ../../Core/Inc/main.h:
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../../Core/Inc/stm32f4xx_hal_conf.h:
@@ -63,6 +63,6 @@ Application/User/Core/main.o: \
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/STM32CubeIDE/Lib/u8g2.h:
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/STM32CubeIDE/Lib/u8x8.h:
-C:/Users/user/STM32Cube/Example/I2C_ADXL345/STM32CubeIDE/Lib/adxl345.h:
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/STM32CubeIDE/Lib/u8g2.h:
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/STM32CubeIDE/Lib/u8x8.h:
+C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/STM32CubeIDE/Lib/adxl345.h:

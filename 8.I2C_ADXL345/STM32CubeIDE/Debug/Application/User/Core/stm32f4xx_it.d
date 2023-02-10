@@ -1,5 +1,5 @@
 Application/User/Core/stm32f4xx_it.o: \
- C:/Users/user/STM32Cube/Example/I2C_ADXL345/Core/Src/stm32f4xx_it.c \
+ C:/Users/user/STM32Cube/Example/8.I2C_ADXL345/Core/Src/stm32f4xx_it.c \
  ../../Core/Inc/main.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../../Core/Inc/stm32f4xx_hal_conf.h \
