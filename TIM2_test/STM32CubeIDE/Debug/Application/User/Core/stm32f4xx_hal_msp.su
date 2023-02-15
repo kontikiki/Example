@@ -1,0 +1,7 @@
+C:/Users/user/STM32Cube/Example/TIM2_test/Core/Src/stm32f4xx_hal_msp.c:63:6:HAL_MspInit	16	static
+C:/Users/user/STM32Cube/Example/TIM2_test/Core/Src/stm32f4xx_hal_msp.c:85:6:HAL_SPI_MspInit	48	static
+C:/Users/user/STM32Cube/Example/TIM2_test/Core/Src/stm32f4xx_hal_msp.c:129:6:HAL_SPI_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/TIM2_test/Core/Src/stm32f4xx_hal_msp.c:160:6:HAL_TIM_Base_MspInit	24	static
+C:/Users/user/STM32Cube/Example/TIM2_test/Core/Src/stm32f4xx_hal_msp.c:182:6:HAL_TIM_Base_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/TIM2_test/Core/Src/stm32f4xx_hal_msp.c:207:6:HAL_UART_MspInit	56	static
+C:/Users/user/STM32Cube/Example/TIM2_test/Core/Src/stm32f4xx_hal_msp.c:267:6:HAL_UART_MspDeInit	16	static

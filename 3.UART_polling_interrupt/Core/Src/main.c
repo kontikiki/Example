@@ -136,9 +136,9 @@ int main(void)
 
 */
 
-/*
+
 	  if(HAL_UART_Receive(&huart1, (uint8_t*)RxBuffer,1, 5000)== HAL_OK)
-	  		{
+	  {
 
 	  			HAL_UART_Transmit(&huart1, (uint8_t*)RxBuffer, 1, 5000);
 	  		}
