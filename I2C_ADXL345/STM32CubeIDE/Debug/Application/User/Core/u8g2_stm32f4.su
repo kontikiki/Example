@@ -1,2 +1,0 @@
-../Application/User/Core/u8g2_stm32f4.c:17:9:u8x8_stm32_gpio_and_delay	24	static
-../Application/User/Core/u8g2_stm32f4.c:45:9:u8x8_byte_stm32_hw_spi	24	static
