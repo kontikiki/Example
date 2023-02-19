@@ -1,0 +1,8 @@
+C:/Users/user/STM32Cube/Example/SPI_PIXY2_test/Core/Src/main.c:63:5:__io_putchar	16	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2_test/Core/Src/main.c:74:5:main	16	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2_test/Core/Src/main.c:138:6:SystemClock_Config	88	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2_test/Core/Src/main.c:187:13:MX_SPI2_Init	8	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2_test/Core/Src/main.c:223:13:MX_USART1_UART_Init	8	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2_test/Core/Src/main.c:254:13:MX_GPIO_Init	48	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2_test/Core/Src/main.c:277:6:HAL_SYSTICK_Callback	4	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2_test/Core/Src/main.c:287:6:Error_Handler	4	static,ignoring_inline_asm
