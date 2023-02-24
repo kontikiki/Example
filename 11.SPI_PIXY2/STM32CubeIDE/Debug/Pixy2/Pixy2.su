@@ -1,0 +1,10 @@
+../Pixy2/Pixy2.c:18:9:getSync	24	static
+../Pixy2/Pixy2.c:62:9:recvPacket	16	static
+../Pixy2/Pixy2.c:110:9:sendPacket	8	static
+../Pixy2/Pixy2.c:121:8:pixy2_getVersion	8	static
+../Pixy2/Pixy2.c:136:8:pixy2_getResolution	8	static
+../Pixy2/Pixy2.c:152:8:pixy2_setServos	24	static
+../Pixy2/Pixy2.c:170:8:pixy2_getBlocks	24	static
+../Pixy2/Pixy2.c:209:8:pixy2_init	32	static
+../Pixy2/Pixy2.c:240:6:pixy2_printVersion	96	static
+../Pixy2/Pixy2.c:248:6:pixy2_printBlock	224	static

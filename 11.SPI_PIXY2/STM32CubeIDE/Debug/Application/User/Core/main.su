@@ -1,0 +1,10 @@
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/STM32CubeIDE/Pixy2/PIDLoop.h:29:6:reset	16	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/STM32CubeIDE/Pixy2/PIDLoop.h:34:6:PIDLoop_init	24	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/STM32CubeIDE/Pixy2/PIDLoop.h:42:6:PIDLoop_update	24	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/main.c:62:5:__io_putchar	16	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/main.c:72:5:main	72	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/main.c:151:6:SystemClock_Config	88	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/main.c:200:13:MX_SPI2_Init	8	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/main.c:236:13:MX_USART1_UART_Init	8	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/main.c:267:13:MX_GPIO_Init	48	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/main.c:296:6:Error_Handler	4	static,ignoring_inline_asm

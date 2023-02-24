@@ -1,0 +1,5 @@
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/stm32f4xx_hal_msp.c:63:6:HAL_MspInit	16	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/stm32f4xx_hal_msp.c:85:6:HAL_SPI_MspInit	48	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/stm32f4xx_hal_msp.c:130:6:HAL_SPI_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/stm32f4xx_hal_msp.c:162:6:HAL_UART_MspInit	48	static
+C:/Users/user/STM32Cube/Example/SPI_PIXY2/Core/Src/stm32f4xx_hal_msp.c:198:6:HAL_UART_MspDeInit	16	static
