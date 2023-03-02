@@ -1,0 +1,4 @@
+../Lib/src/rcservo.c:16:6:rcs_init	16	static
+../Lib/src/rcservo.c:30:9:rcs_setLimits	16	static
+../Lib/src/rcservo.c:45:6:rcs_setLimits_all	8	static
+../Lib/src/rcservo.c:51:9:rcs_setPos	24	static

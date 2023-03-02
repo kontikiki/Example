@@ -1,0 +1,8 @@
+C:/Users/user/STM32Cube/Example/11.PIXY2_SPI_TIM_3/Core/Src/stm32f4xx_hal_msp.c:65:6:HAL_MspInit	16	static
+C:/Users/user/STM32Cube/Example/11.PIXY2_SPI_TIM_3/Core/Src/stm32f4xx_hal_msp.c:87:6:HAL_SPI_MspInit	48	static
+C:/Users/user/STM32Cube/Example/11.PIXY2_SPI_TIM_3/Core/Src/stm32f4xx_hal_msp.c:132:6:HAL_SPI_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/11.PIXY2_SPI_TIM_3/Core/Src/stm32f4xx_hal_msp.c:164:6:HAL_TIM_Base_MspInit	24	static
+C:/Users/user/STM32Cube/Example/11.PIXY2_SPI_TIM_3/Core/Src/stm32f4xx_hal_msp.c:191:6:HAL_TIM_MspPostInit	48	static
+C:/Users/user/STM32Cube/Example/11.PIXY2_SPI_TIM_3/Core/Src/stm32f4xx_hal_msp.c:243:6:HAL_TIM_Base_MspDeInit	16	static
+C:/Users/user/STM32Cube/Example/11.PIXY2_SPI_TIM_3/Core/Src/stm32f4xx_hal_msp.c:276:6:HAL_UART_MspInit	48	static
+C:/Users/user/STM32Cube/Example/11.PIXY2_SPI_TIM_3/Core/Src/stm32f4xx_hal_msp.c:312:6:HAL_UART_MspDeInit	16	static

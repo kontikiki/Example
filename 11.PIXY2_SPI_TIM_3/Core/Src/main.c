@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Pixy2.h"
-#include "PIDLoop.h"
+#include "rcservo.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,6 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+//#define VIDEO
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -41,6 +42,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi2;
+
+TIM_HandleTypeDef htim10;
+TIM_HandleTypeDef htim11;
 
 UART_HandleTypeDef huart1;
 
@@ -52,6 +56,8 @@ UART_HandleTypeDef huart1;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI2_Init(void);
+static void MX_TIM10_Init(void);
+static void MX_TIM11_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -93,51 +99,98 @@ int main(void) {
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	MX_SPI2_Init();
+	MX_TIM10_Init();
+	MX_TIM11_Init();
 	MX_USART1_UART_Init();
-
 	/* USER CODE BEGIN 2 */
 	extern Block *blocks;
 	extern uint8_t numBlocks;
 	extern Pixy2 pixy;
+
 	int32_t panOffset, tiltOffset;
 	PIDLoop pan_pid;
 	PIDLoop tilt_pid;
+	//Pixel pixel;
 
-	pixy2_init(&hspi2, SPI_CS_GPIO_Port, SPI_CS_Pin);
+#ifndef VIDEO
+  	pixy2_init(&hspi2, SPI_CS_GPIO_Port, SPI_CS_Pin);
 
-	PIDLoop_init(&pan_pid, 400, 0, 400);
-	PIDLoop_init(&tilt_pid, 500, 0, 500);
+  	pixy2_printVersion();
 
-	pixy2_printVersion();
+  	HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
+  	HAL_TIM_PWM_Start(&htim11, TIM_CHANNEL_1);
+
+  	PIDLoop_init(&tilt_pid, 400, 0, 400, 0);
+  	PIDLoop_init(&pan_pid, 500, 0, 500, 1);
+
+  	rcs_init();
+
+#else
+	pixy2_changeProg("video");
+#endif
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
+#ifndef VIDEO
+	  numBlocks = pixy2_getBlocks(true, CCC_SIG_ALL, 0xff);
 
-		numBlocks = pixy2_getBlocks(true, CCC_SIG_ALL, 0xff);
+	  		if (numBlocks) {
+	  			for (int i = 0; i < numBlocks; i++) {
+	  				pixy2_printBlock(i);
+	  			}
+	  			printf("\r\n");
 
-		if (numBlocks) {
-			for (int i = 0; i < numBlocks; i++) {
-				pixy2_printBlock(i);
+	  			panOffset = (int32_t) pixy.frameWidth / 2
+	  					- (int32_t) (blocks + 0)->m_x;
+	  			tiltOffset = (int32_t) (blocks + 0)->m_y
+	  					- (int32_t) pixy.frameHeight / 2;
+
+	  			PIDLoop_update(&pan_pid, panOffset);
+	  			PIDLoop_update(&tilt_pid, tiltOffset);
+
+
+	  			rcs_setPos(pan_pid.m_axis,pan_pid.m_command);
+	  			rcs_setPos(tilt_pid.m_axis,tilt_pid.m_command);
+
+
+//	  			pixy2_setServos((uint16_t) (pan_pid.m_command),(uint16_t) (tilt_pid.m_command));
+
+	  		} else {
+	  			reset(&pan_pid);
+	  			reset(&tilt_pid);
+
+
+	  			rcs_setPos(pan_pid.m_axis,pan_pid.m_command);
+	  			rcs_setPos(tilt_pid.m_axis,tilt_pid.m_command);
+
+//	  			pixy2_setServos((uint16_t) (pan_pid.m_command),(uint16_t) (tilt_pid.m_command));
+
+	  		}
+
+#else
+	  		uint8_t r,g,b;
+		for (uint8_t y = 0; y < 207; y++) {
+			for (uint8_t x = 0; x < 255; x++) {
+
+				pixy2_getRGB(x, y, (uint8_t*) &r, (uint8_t*) &g,
+						(uint8_t*) &b, 0);
+
+				uint8_t pixelPacket[7];
+				pixelPacket[0]=0xae;
+				pixelPacket[1]=0xc1;
+				pixelPacket[2] = x;
+				pixelPacket[3] = y;
+				pixelPacket[4] = r;
+				pixelPacket[5] = g;
+				pixelPacket[6] = b;
+				for (int i = 0; i < 7; i++)
+					HAL_UART_Transmit(&huart1, (uint8_t*) &pixelPacket[i], 1, 100);
 			}
-			printf("\r\n");
-
-			panOffset = (int32_t) pixy.frameWidth / 2 - (int32_t) (blocks + 0)->m_x;
-			tiltOffset = (int32_t) (blocks + 0)->m_y
-					- (int32_t) pixy.frameHeight / 2;
-
-			PIDLoop_update(&pan_pid, panOffset);
-			PIDLoop_update(&tilt_pid, tiltOffset);
-
-			// set pan and tilt servos
-			pixy2_setServos((uint16_t)(pan_pid.m_command), (uint16_t)(tilt_pid.m_command));
-		} else {
-			//reset(&pan_pid);
-			//reset(&tilt_pid);
-			pixy2_setServos((uint16_t)(pan_pid.m_command), (uint16_t)(tilt_pid.m_command));
 		}
 
+#endif
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
@@ -230,6 +283,92 @@ static void MX_SPI2_Init(void) {
 }
 
 /**
+ * @brief TIM10 Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_TIM10_Init(void) {
+
+	/* USER CODE BEGIN TIM10_Init 0 */
+
+	/* USER CODE END TIM10_Init 0 */
+
+	TIM_OC_InitTypeDef sConfigOC = { 0 };
+
+	/* USER CODE BEGIN TIM10_Init 1 */
+
+	/* USER CODE END TIM10_Init 1 */
+	htim10.Instance = TIM10;
+	htim10.Init.Prescaler = 179;
+	htim10.Init.CounterMode = TIM_COUNTERMODE_UP;
+	htim10.Init.Period = 19999;
+	htim10.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+	htim10.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	if (HAL_TIM_Base_Init(&htim10) != HAL_OK) {
+		Error_Handler();
+	}
+	if (HAL_TIM_PWM_Init(&htim10) != HAL_OK) {
+		Error_Handler();
+	}
+	sConfigOC.OCMode = TIM_OCMODE_PWM1;
+	sConfigOC.Pulse = 1500;
+	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+	if (HAL_TIM_PWM_ConfigChannel(&htim10, &sConfigOC, TIM_CHANNEL_1)
+			!= HAL_OK) {
+		Error_Handler();
+	}
+	/* USER CODE BEGIN TIM10_Init 2 */
+
+	/* USER CODE END TIM10_Init 2 */
+	HAL_TIM_MspPostInit(&htim10);
+
+}
+
+/**
+ * @brief TIM11 Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_TIM11_Init(void) {
+
+	/* USER CODE BEGIN TIM11_Init 0 */
+
+	/* USER CODE END TIM11_Init 0 */
+
+	TIM_OC_InitTypeDef sConfigOC = { 0 };
+
+	/* USER CODE BEGIN TIM11_Init 1 */
+
+	/* USER CODE END TIM11_Init 1 */
+	htim11.Instance = TIM11;
+	htim11.Init.Prescaler = 179;
+	htim11.Init.CounterMode = TIM_COUNTERMODE_UP;
+	htim11.Init.Period = 19999;
+	htim11.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+	htim11.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	if (HAL_TIM_Base_Init(&htim11) != HAL_OK) {
+		Error_Handler();
+	}
+	if (HAL_TIM_PWM_Init(&htim11) != HAL_OK) {
+		Error_Handler();
+	}
+	sConfigOC.OCMode = TIM_OCMODE_PWM1;
+	sConfigOC.Pulse = 1500;
+	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+	if (HAL_TIM_PWM_ConfigChannel(&htim11, &sConfigOC, TIM_CHANNEL_1)
+			!= HAL_OK) {
+		Error_Handler();
+	}
+	/* USER CODE BEGIN TIM11_Init 2 */
+
+	/* USER CODE END TIM11_Init 2 */
+	HAL_TIM_MspPostInit(&htim11);
+
+}
+
+/**
  * @brief USART1 Initialization Function
  * @param None
  * @retval None
@@ -269,6 +408,7 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
 	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOF_CLK_ENABLE();
 	__HAL_RCC_GPIOH_CLK_ENABLE();
 	__HAL_RCC_GPIOC_CLK_ENABLE();
 	__HAL_RCC_GPIOB_CLK_ENABLE();

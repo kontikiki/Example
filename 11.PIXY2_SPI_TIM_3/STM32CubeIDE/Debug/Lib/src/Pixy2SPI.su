@@ -1,0 +1,4 @@
+../Lib/src/Pixy2SPI.c:13:8:open	24	static
+../Lib/src/Pixy2SPI.c:21:6:close	4	static
+../Lib/src/Pixy2SPI.c:24:9:recv	32	static
+../Lib/src/Pixy2SPI.c:44:9:send	24	static
