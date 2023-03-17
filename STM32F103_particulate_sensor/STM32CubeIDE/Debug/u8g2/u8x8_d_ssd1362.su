@@ -1,0 +1,6 @@
+../u8g2/u8x8_d_ssd1362.c:74:17:u8x8_ssd1362_8to32	32	static
+../u8g2/u8x8_d_ssd1362.c:105:17:u8x8_ssd1362_8to24	32	static
+../u8g2/u8x8_d_ssd1362.c:136:9:u8x8_d_ssd1362_common	40	static
+../u8g2/u8x8_d_ssd1362.c:210:9:u8x8_d_ssd1362_common_0_75	40	static
+../u8g2/u8x8_d_ssd1362.c:392:9:u8x8_d_ssd1362_256x64	24	static
+../u8g2/u8x8_d_ssd1362.c:505:9:u8x8_d_ssd1362_206x36	24	static
