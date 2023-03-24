@@ -31,7 +31,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define RX_BUFFER_SIZE 16
+#define RX_BUFFER_SIZE 32
 
 typedef struct _ring_buffer {
 	uint8_t buffer[RX_BUFFER_SIZE];
@@ -50,8 +50,8 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 ring_buffer_t uart_rx;
-uint8_t temp;
-uint8_t buff[16];
+uint8_t temp[1];
+uint8_t buff[32];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,15 +60,17 @@ static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
+
 void push(ring_buffer_t*, uint8_t);
 uint8_t pop(ring_buffer_t*);
-uint8_t isEmpty(ring_buffer_t*);
 void rxBufferInit(ring_buffer_t*);
 int8_t uart_available(ring_buffer_t*);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
 void rxBufferInit(ring_buffer_t *uart) {
 	uart->head = 0;
 	uart->tail = 0;
@@ -76,38 +78,31 @@ void rxBufferInit(ring_buffer_t *uart) {
 }
 
 void push(ring_buffer_t *uart, uint8_t ch) {
-	uint16_t i=(unsigned int)(uart->head+1)%RX_BUFFER_SIZE;
-	if(i!=uart->tail)
-	{
+	uint16_t i = (unsigned int) (uart->head + 1) % RX_BUFFER_SIZE;
+	if (i != uart->tail) {
 		uart->buffer[uart->head] = ch;
-		uart->head=i;
+		uart->head = i;
 	}
 }
 
-uint8_t pop(ring_buffer_t* uart){
+uint8_t pop(ring_buffer_t *uart) {
 
-/*
-	uint32_t reg = READ_REG(huart1.Instance->CR1);
-
-		__HAL_UART_DISABLE_IT(&huart1, UART_IT_RXNE);
-		WRITE_REG(huart1.Instance->CR1, reg);
-*/
-	if(uart->head==uart->tail)
-	{
+	if (uart->head == uart->tail) {
 		return -1;
-	}
-	else
-	{
-		unsigned char c=uart->buffer[uart->tail];
-		uart->tail=(uint16_t)(uart->tail+1)%RX_BUFFER_SIZE;
+	} else {
+
+		unsigned char c = uart->buffer[uart->tail];
+		uart->tail = (uint16_t) (uart->tail + 1) % RX_BUFFER_SIZE;
 
 		return c;
+
 	}
 }
 
-int8_t uart_available(ring_buffer_t* uart) {
+int8_t uart_available(ring_buffer_t *uart) {
 
-	uint8_t n=(unsigned int)(RX_BUFFER_SIZE+(uart->head)-(uart->tail))%RX_BUFFER_SIZE;
+	uint8_t n = (unsigned int) (RX_BUFFER_SIZE + (uart->head) - (uart->tail))
+			% RX_BUFFER_SIZE;
 	return n;
 }
 
@@ -146,25 +141,36 @@ int main(void) {
 	MX_NVIC_Init();
 	/* USER CODE BEGIN 2 */
 	rxBufferInit(&uart_rx);
-	HAL_UART_Receive_IT(&huart1, &temp, 1);
+	HAL_UART_Receive_IT(&huart1, temp, sizeof(temp));
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+
 	while (1) {
+
+		memset(buff, 0, sizeof(buff));
+
+		int num = uart_available(&uart_rx);
+		int i;
+		if (num) {
+			for (i = 0; i < num; i++) {
+
+				int ch = pop(&uart_rx);
+				buff[i] = ch;
+				if (ch == '\n')
+					break;
+			}
+
+			HAL_UART_Transmit(&huart1, buff, i, 500);
+
+		}
+
 		/* USER CODE END WHILE */
-		int num=uart_available(&uart_rx);
-		if(num){
-		for(int i=0;i<num;i++)
-		{
-			int ch=pop(&uart_rx);
-			buff[i]=ch;
-		}
-		HAL_UART_Transmit(&huart1,buff,num, 500);
-		}
-		//memset(buff,0,sizeof(buff));
+
 		/* USER CODE BEGIN 3 */
 	}
+
 	/* USER CODE END 3 */
 }
 
@@ -229,7 +235,7 @@ static void MX_USART1_UART_Init(void) {
 
 	/* USER CODE END USART1_Init 1 */
 	huart1.Instance = USART1;
-	huart1.Init.BaudRate = 115200;
+	huart1.Init.BaudRate = 9600;
 	huart1.Init.WordLength = UART_WORDLENGTH_8B;
 	huart1.Init.StopBits = UART_STOPBITS_1;
 	huart1.Init.Parity = UART_PARITY_NONE;
@@ -262,11 +268,44 @@ static void MX_GPIO_Init(void) {
 /* USER CODE BEGIN 4 */
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+
+	/*
+	 if ((huart1.ErrorCode & HAL_UART_ERROR_ORE) != RESET) {
+	 // Handle overrun error as blocking
+	 HAL_UART_AbortReceive(&huart1);
+	 HAL_UART_Init(&huart1);
+	 HAL_UART_Receive_IT(&huart1, temp, sizeof(temp));
+	 }
+	 */
 	if (huart->Instance == USART1) {
 
-		push(&uart_rx,temp);
-		HAL_UART_Receive_IT(&huart1, &temp, 1);
+		for (int i = 0; i < sizeof(temp); i++)
+			push(&uart_rx, temp[i]);
+
+		HAL_UART_Receive_IT(&huart1, temp, sizeof(temp));
 	}
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+	if (huart->Instance == USART1) {
+
+		//if (huart->ErrorCode == HAL_UART_ERROR_ORE)
+//		  {
+		    HAL_UART_AbortReceive_IT(huart);
+		    __HAL_UART_CLEAR_OREFLAG(huart);
+		    huart->RxState = HAL_UART_STATE_READY;
+		    /* Disable Rx Interrupts */
+		    __HAL_UART_DISABLE_IT(huart, UART_IT_RXNE);
+
+		    /* Restart UART reception */
+		    if (HAL_UART_Receive_IT(huart, temp, sizeof(temp)) != HAL_OK)
+		    {
+		      Error_Handler();
+		    }
+		//  }
+
+	}
+
 }
 
 /* USER CODE END 4 */
@@ -278,7 +317,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 void Error_Handler(void) {
 	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
-	__disable_irq();
+	//__disable_irq();
+//	HAL_UART_ErrorCallback(&huart1);
 	while (1) {
 	}
 	/* USER CODE END Error_Handler_Debug */
