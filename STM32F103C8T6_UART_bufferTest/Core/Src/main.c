@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
+#include "uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,13 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define RX_BUFFER_SIZE 32
 
-typedef struct _ring_buffer {
-	uint8_t buffer[RX_BUFFER_SIZE];
-	volatile uint16_t head;
-	volatile uint16_t tail;
-} ring_buffer_t;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -47,8 +42,10 @@ typedef struct _ring_buffer {
 
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_rx;
 
 /* USER CODE BEGIN PV */
+
 ring_buffer_t uart_rx;
 uint8_t temp[1];
 uint8_t buff[32];
@@ -57,54 +54,16 @@ uint8_t buff[32];
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_NVIC_Init(void);
+void user_isr(UART_HandleTypeDef *huart);
 /* USER CODE BEGIN PFP */
-
-void push(ring_buffer_t*, uint8_t);
-uint8_t pop(ring_buffer_t*);
-void rxBufferInit(ring_buffer_t*);
-int8_t uart_available(ring_buffer_t*);
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-void rxBufferInit(ring_buffer_t *uart) {
-	uart->head = 0;
-	uart->tail = 0;
-	memset(uart->buffer, 0, sizeof(RX_BUFFER_SIZE));
-}
-
-void push(ring_buffer_t *uart, uint8_t ch) {
-	uint16_t i = (unsigned int) (uart->head + 1) % RX_BUFFER_SIZE;
-	if (i != uart->tail) {
-		uart->buffer[uart->head] = ch;
-		uart->head = i;
-	}
-}
-
-uint8_t pop(ring_buffer_t *uart) {
-
-	if (uart->head == uart->tail) {
-		return -1;
-	} else {
-
-		unsigned char c = uart->buffer[uart->tail];
-		uart->tail = (uint16_t) (uart->tail + 1) % RX_BUFFER_SIZE;
-
-		return c;
-
-	}
-}
-
-int8_t uart_available(ring_buffer_t *uart) {
-
-	uint8_t n = (unsigned int) (RX_BUFFER_SIZE + (uart->head) - (uart->tail))
-			% RX_BUFFER_SIZE;
-	return n;
-}
 
 /* USER CODE END 0 */
 
@@ -135,13 +94,16 @@ int main(void) {
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
+	MX_DMA_Init();
 	MX_USART1_UART_Init();
 
 	/* Initialize interrupts */
 	MX_NVIC_Init();
 	/* USER CODE BEGIN 2 */
+
 	rxBufferInit(&uart_rx);
 	HAL_UART_Receive_IT(&huart1, temp, sizeof(temp));
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -157,9 +119,11 @@ int main(void) {
 			for (i = 0; i < num; i++) {
 
 				int ch = pop(&uart_rx);
-				buff[i] = ch;
-				if (ch == '\n')
+				if (ch != -1) {
+					buff[i] = ch;
+				} else if (ch == '\n') {
 					break;
+				}
 			}
 
 			HAL_UART_Transmit(&huart1, buff, i, 500);
@@ -215,6 +179,9 @@ void SystemClock_Config(void) {
  * @retval None
  */
 static void MX_NVIC_Init(void) {
+	/* DMA1_Channel5_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
 	/* USART1_IRQn interrupt configuration */
 	HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(USART1_IRQn);
@@ -235,7 +202,7 @@ static void MX_USART1_UART_Init(void) {
 
 	/* USER CODE END USART1_Init 1 */
 	huart1.Instance = USART1;
-	huart1.Init.BaudRate = 9600;
+	huart1.Init.BaudRate = 115200;
 	huart1.Init.WordLength = UART_WORDLENGTH_8B;
 	huart1.Init.StopBits = UART_STOPBITS_1;
 	huart1.Init.Parity = UART_PARITY_NONE;
@@ -248,6 +215,16 @@ static void MX_USART1_UART_Init(void) {
 	/* USER CODE BEGIN USART1_Init 2 */
 
 	/* USER CODE END USART1_Init 2 */
+
+}
+
+/**
+ * Enable DMA controller clock
+ */
+static void MX_DMA_Init(void) {
+
+	/* DMA controller clock enable */
+	__HAL_RCC_DMA1_CLK_ENABLE();
 
 }
 
@@ -267,22 +244,32 @@ static void MX_GPIO_Init(void) {
 
 /* USER CODE BEGIN 4 */
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+/*
+ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
-	/*
-	 if ((huart1.ErrorCode & HAL_UART_ERROR_ORE) != RESET) {
-	 // Handle overrun error as blocking
-	 HAL_UART_AbortReceive(&huart1);
-	 HAL_UART_Init(&huart1);
-	 HAL_UART_Receive_IT(&huart1, temp, sizeof(temp));
-	 }
-	 */
-	if (huart->Instance == USART1) {
+ if (huart->Instance == USART1) {
 
-		for (int i = 0; i < sizeof(temp); i++)
-			push(&uart_rx, temp[i]);
+ huart->Instance->SR;
 
-		HAL_UART_Receive_IT(&huart1, temp, sizeof(temp));
+ char c = huart->Instance->DR;
+ push(&uart_rx, c);
+ }
+ HAL_UART_Receive_IT(&huart1, temp, sizeof(temp));
+ }
+ }
+ */
+
+void user_isr(UART_HandleTypeDef *huart) {
+	uint32_t isrflags = READ_REG(huart->Instance->SR);
+	uint32_t cr1its = READ_REG(huart->Instance->CR1);
+
+	if (((isrflags & USART_SR_RXNE) != RESET)
+			&& ((cr1its & USART_CR1_RXNEIE) != RESET)) {
+
+		huart->Instance->SR;
+		unsigned char c = huart->Instance->DR;
+		push(&uart_rx, c);
+		return;
 	}
 }
 
@@ -291,17 +278,16 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
 
 		//if (huart->ErrorCode == HAL_UART_ERROR_ORE)
 //		  {
-		    HAL_UART_AbortReceive_IT(huart);
-		    __HAL_UART_CLEAR_OREFLAG(huart);
-		    huart->RxState = HAL_UART_STATE_READY;
-		    /* Disable Rx Interrupts */
-		    __HAL_UART_DISABLE_IT(huart, UART_IT_RXNE);
+		HAL_UART_AbortReceive_IT(huart);
+		__HAL_UART_CLEAR_OREFLAG(huart);
+		huart->RxState = HAL_UART_STATE_READY;
+		/* Disable Rx Interrupts */
+		__HAL_UART_DISABLE_IT(huart, UART_IT_RXNE);
 
-		    /* Restart UART reception */
-		    if (HAL_UART_Receive_IT(huart, temp, sizeof(temp)) != HAL_OK)
-		    {
-		      Error_Handler();
-		    }
+		/* Restart UART reception */
+		if (HAL_UART_Receive_IT(huart, temp, sizeof(temp)) != HAL_OK) {
+			Error_Handler();
+		}
 		//  }
 
 	}
@@ -318,7 +304,6 @@ void Error_Handler(void) {
 	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
 	//__disable_irq();
-//	HAL_UART_ErrorCallback(&huart1);
 	while (1) {
 	}
 	/* USER CODE END Error_Handler_Debug */

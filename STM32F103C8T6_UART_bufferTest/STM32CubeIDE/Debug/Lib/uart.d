@@ -1,6 +1,4 @@
-Application/User/Core/main.o: \
- C:/Users/user/STM32Cube/Example/STM32F103C8T6_UART_bufferTest/Core/Src/main.c \
- ../../Core/Inc/main.h \
+Lib/uart.o: ../Lib/uart.c ../Lib/uart.h \
  ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../../Core/Inc/stm32f1xx_hal_conf.h \
  ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -23,9 +21,8 @@ Application/User/Core/main.o: \
  ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
- ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- C:/Users/user/STM32Cube/Example/STM32F103C8T6_UART_bufferTest/STM32CubeIDE/Lib/uart.h
-../../Core/Inc/main.h:
+ ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+../Lib/uart.h:
 ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../../Core/Inc/stm32f1xx_hal_conf.h:
 ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h:
@@ -49,4 +46,3 @@ Application/User/Core/main.o: \
 ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
-C:/Users/user/STM32Cube/Example/STM32F103C8T6_UART_bufferTest/STM32CubeIDE/Lib/uart.h:
