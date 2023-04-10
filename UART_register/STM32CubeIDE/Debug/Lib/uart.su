@@ -1,0 +1,4 @@
+../Lib/uart.c:10:6:rxBufferInit	16	static
+../Lib/uart.c:16:6:push	24	static
+../Lib/uart.c:24:9:pop	24	static
+../Lib/uart.c:38:8:uart_available	24	static

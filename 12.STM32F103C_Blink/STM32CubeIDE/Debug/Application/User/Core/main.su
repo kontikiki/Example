@@ -1,0 +1,7 @@
+C:/Users/user/STM32Cube/Example/STM32F103C_Blink/Core/Src/main.c:66:5:main	8	static
+C:/Users/user/STM32Cube/Example/STM32F103C_Blink/Core/Src/main.c:113:6:SystemClock_Config	72	static
+C:/Users/user/STM32Cube/Example/STM32F103C_Blink/Core/Src/main.c:152:13:MX_NVIC_Init	8	static
+C:/Users/user/STM32Cube/Example/STM32F103C_Blink/Core/Src/main.c:164:13:MX_TIM1_Init	32	static
+C:/Users/user/STM32Cube/Example/STM32F103C_Blink/Core/Src/main.c:210:13:MX_GPIO_Init	40	static
+C:/Users/user/STM32Cube/Example/STM32F103C_Blink/Core/Src/main.c:232:6:HAL_TIM_PeriodElapsedCallback	16	static
+C:/Users/user/STM32Cube/Example/STM32F103C_Blink/Core/Src/main.c:242:6:Error_Handler	4	static,ignoring_inline_asm

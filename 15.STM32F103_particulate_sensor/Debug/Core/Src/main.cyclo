@@ -1,0 +1,11 @@
+main.c:105:5:main	30
+main.c:355:6:SystemClock_Config	3
+main.c:391:13:MX_NVIC_Init	1
+main.c:408:13:MX_SPI1_Init	2
+main.c:444:13:MX_TIM2_Init	4
+main.c:486:13:MX_USART1_UART_Init	2
+main.c:517:13:MX_USART2_UART_Init	2
+main.c:548:13:MX_GPIO_Init	1
+main.c:590:6:HAL_TIM_PeriodElapsedCallback	2
+main.c:598:6:HAL_GPIO_EXTI_Callback	2
+main.c:611:6:Error_Handler	1

@@ -1,0 +1,14 @@
+u8x8_display.c:52:6:u8x8_d_helper_display_setup_memory	1
+u8x8_display.c:64:6:u8x8_d_helper_display_init	1
+u8x8_display.c:82:9:u8x8_DrawTile	1
+u8x8_display.c:93:6:u8x8_SetupMemory	1
+u8x8_display.c:109:6:u8x8_InitInterface	1
+u8x8_display.c:135:6:u8x8_InitDisplay	1
+u8x8_display.c:141:6:u8x8_SetPowerSave	1
+u8x8_display.c:146:6:u8x8_SetFlipMode	1
+u8x8_display.c:151:6:u8x8_SetContrast	1
+u8x8_display.c:156:6:u8x8_RefreshDisplay	1
+u8x8_display.c:161:6:u8x8_ClearDisplayWithTile	2
+u8x8_display.c:179:6:u8x8_ClearDisplay	1
+u8x8_display.c:185:6:u8x8_FillDisplay	1
+u8x8_display.c:191:6:u8x8_ClearLine	2

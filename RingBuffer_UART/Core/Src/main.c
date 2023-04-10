@@ -229,9 +229,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
 //		ring_buffer_queue(&ring_buffer, tmp);
 
-		HAL_NVIC_DisableIRQ(USART1_IRQn);
+
 		ring_buffer_queue_arr(&ring_buffer, tmp, sizeof(tmp));
-		HAL_NVIC_EnableIRQ(USART1_IRQn);
 		HAL_UART_Receive_IT(&huart1, (uint8_t*) tmp, sizeof(tmp));
 	}
 }

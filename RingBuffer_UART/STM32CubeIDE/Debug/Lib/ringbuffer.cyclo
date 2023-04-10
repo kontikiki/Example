@@ -1,0 +1,9 @@
+ringbuffer.h:117:16:ring_buffer_is_empty	1
+ringbuffer.h:126:16:ring_buffer_is_full	1
+ringbuffer.h:135:27:ring_buffer_num_items	1
+ringbuffer.c:8:6:ring_buffer_init	1
+ringbuffer.c:16:6:ring_buffer_queue	2
+ringbuffer.c:29:6:ring_buffer_queue_arr	2
+ringbuffer.c:37:9:ring_buffer_dequeue	2
+ringbuffer.c:48:20:ring_buffer_dequeue_arr	4
+ringbuffer.c:63:9:ring_buffer_peek	2

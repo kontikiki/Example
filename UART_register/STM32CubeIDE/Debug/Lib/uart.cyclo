@@ -1,0 +1,4 @@
+uart.c:10:6:rxBufferInit	1
+uart.c:16:6:push	2
+uart.c:24:9:pop	2
+uart.c:38:8:uart_available	1
