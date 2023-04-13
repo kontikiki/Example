@@ -13,7 +13,7 @@
 #include "string.h"
 #include "stm32f1xx_hal.h"
 
-#define RX_BUFFER_SIZE 56
+#define RX_BUFFER_SIZE 55
 
 typedef struct _ring_buffer {
 	uint8_t buffer[RX_BUFFER_SIZE];
