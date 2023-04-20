@@ -3,5 +3,5 @@ stm32f1xx_hal_msp.c:89:6:HAL_SPI_MspInit	2
 stm32f1xx_hal_msp.c:123:6:HAL_SPI_MspDeInit	2
 stm32f1xx_hal_msp.c:152:6:HAL_TIM_Base_MspInit	2
 stm32f1xx_hal_msp.c:174:6:HAL_TIM_Base_MspDeInit	2
-stm32f1xx_hal_msp.c:199:6:HAL_UART_MspInit	3
-stm32f1xx_hal_msp.c:265:6:HAL_UART_MspDeInit	3
+stm32f1xx_hal_msp.c:199:6:HAL_UART_MspInit	4
+stm32f1xx_hal_msp.c:292:6:HAL_UART_MspDeInit	4

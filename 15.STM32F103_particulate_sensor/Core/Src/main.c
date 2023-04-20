@@ -51,6 +51,7 @@ TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
 
@@ -62,8 +63,7 @@ uint8_t data;
 uint8_t cmd;
 
 uint8_t getDataCommand[5] = { 0x11, 0x02, 0x0B, 0x07, 0xDB };
-uint8_t closeCommand[6] = { 0x11, 0x03, 0x0C, 0x01,
-0x1E, 0xC1 };
+uint8_t closeCommand[6] = { 0x11, 0x03, 0x0C, 0x01, 0x1E, 0xC1 };
 uint8_t openCommand[6] = { 0x11, 0x03, 0x0C, 0x02, 0x1E, 0xC0 };
 
 uint8_t timingModeSetCommand[6] = { 0x11, 0x03, 0x05, DURATION_TIME_HIGH,
@@ -81,6 +81,7 @@ static void MX_SPI1_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_USART3_UART_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -133,6 +134,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_TIM2_Init();
+  MX_USART3_UART_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -145,9 +147,9 @@ int main(void)
 	u8g2_SetPowerSave(&u8g2, 0);
 
 	u8g2_SetFont(&u8g2, u8g2_font_5x7_tr);
-	u8g2_SetDisplayRotation(&u8g2,U8G2_R2);
+	u8g2_SetDisplayRotation(&u8g2, U8G2_R2);
 
-	//HAL_UART_Receive_IT(&huart1, &cmd, 1);
+	HAL_UART_Receive_IT(&huart3, &cmd, 1);
 
 	/* Enable the UART Error Interrupt: (Frame error, noise error, overrun error) */
 	__HAL_UART_ENABLE_IT(&huart2, UART_IT_ERR);
@@ -161,7 +163,6 @@ int main(void)
 	while (1) {
 
 		if (timerFlag == 1) {
-			timerFlag = 0;
 
 			state = 2;
 
@@ -181,10 +182,9 @@ int main(void)
 
 		}
 
-		if (btnFlag == 1) {
-			btnFlag = 0;
+		else if (btnFlag == 1) {
 
-			state = 2;
+			state = 4;
 			sprintf(str, "BUTTON!");
 			u8g2_FirstPage(&u8g2);
 			do {
@@ -197,15 +197,17 @@ int main(void)
 		if (state == 1) {
 			state = 3;
 			sprintf(str, "MEASURING...");
-						u8g2_FirstPage(&u8g2);
-						do {
-							u8g2_DrawStrX2(&u8g2, 5, 30, str);
+			u8g2_FirstPage(&u8g2);
+			do {
+				u8g2_DrawStrX2(&u8g2, 5, 30, str);
 
-						} while (u8g2_NextPage(&u8g2));
-			pre_tick = HAL_GetTick();
-			while ((HAL_GetTick() - pre_tick) < 5000)
-				;
+			} while (u8g2_NextPage(&u8g2));
 
+			/*
+			 pre_tick = HAL_GetTick();
+			 while ((HAL_GetTick() - pre_tick) < 5000)
+			 ;
+			 */
 			memset(buff, 0, 55);
 			HAL_UART_Transmit(&huart2, (uint8_t*) getDataCommand, 5, 5000);
 
@@ -222,38 +224,41 @@ int main(void)
 					buff[i] = ch;
 				}
 			}
-			//HAL_UART_Transmit(&huart1, buff, num, 500);
+			HAL_UART_Transmit(&huart3, buff, num, 500);
 
 			if ((buff[0] == 0x16 && buff[1] == 0x35)) {
 				if (buff[2] == 0x0B) {
 					int val = 0;
 					/*
-					val |= (buff[3] << 24) | (buff[4] << 16) | (buff[5] << 8)
-							| buff[6];
-							*/
-					val=(buff[3]<<24)+(buff[4]<<16)+(buff[5]<<8)+(buff[6]);
+					 val |= (buff[3] << 24) | (buff[4] << 16) | (buff[5] << 8)
+					 | buff[6];
+					 */
+					val = (buff[3] << 24) + (buff[4] << 16) + (buff[5] << 8)
+							+ (buff[6]);
 					sprintf(str, "PM1.0 : %d\r\n", val);
 #ifndef OLED
 	  					HAL_UART_Transmit(&huart1, (uint8_t*) str, sizeof(str),
 	  							100);
 	  #endif
 					val = 0;
-					val=(buff[7]<<24)+(buff[8]<<16)+(buff[9]<<8)+(buff[10]);
+					val = (buff[7] << 24) + (buff[8] << 16) + (buff[9] << 8)
+							+ (buff[10]);
 					/*
-					val |= (buff[7] << 24) | (buff[8] << 16) | (buff[9] << 8)
-							| buff[10];
-							*/
+					 val |= (buff[7] << 24) | (buff[8] << 16) | (buff[9] << 8)
+					 | buff[10];
+					 */
 					sprintf(str2, "PM2.5 : %d\r\n", val);
 #ifndef OLED
 	  					HAL_UART_Transmit(&huart1, (uint8_t*) str2, sizeof(str2),
 	  							5000);
 	  #endif
 					val = 0;
-					val=(buff[11]<<24)+(buff[12]<<16)+(buff[13]<<8)+(buff[14]);
+					val = (buff[11] << 24) + (buff[12] << 16) + (buff[13] << 8)
+							+ (buff[14]);
 					/*
-					val |= (buff[11] << 24) | (buff[12] << 16) | (buff[13] << 8)
-							| buff[14];
-							*/
+					 val |= (buff[11] << 24) | (buff[12] << 16) | (buff[13] << 8)
+					 | buff[14];
+					 */
 					sprintf(str3, "PM10 : %d\r\n", val);
 
 #ifndef OLED
@@ -283,8 +288,7 @@ int main(void)
 			state = 1;
 
 			memset(buff, 0, 55);
-			HAL_UART_Transmit(&huart2, (uint8_t*) openCommand, 6,
-					5000);
+			HAL_UART_Transmit(&huart2, (uint8_t*) openCommand, 6, 5000);
 			pre_tick = HAL_GetTick();
 			while ((HAL_GetTick() - pre_tick) < 1000)
 				;
@@ -299,14 +303,14 @@ int main(void)
 					buff[i] = ch;
 				}
 			}
-			//HAL_UART_Transmit(&huart1, buff, num, 500);
+			timerFlag = 0;
+			HAL_UART_Transmit(&huart3, buff, num, 500);
 
 		} else if (state == 3) {
 			state = 0;
 
 			memset(buff, 0, 55);
-			HAL_UART_Transmit(&huart2, (uint8_t*) closeCommand, 6,
-					5000);
+			HAL_UART_Transmit(&huart2, (uint8_t*) closeCommand, 6, 5000);
 			pre_tick = HAL_GetTick();
 			while ((HAL_GetTick() - pre_tick) < 1000)
 				;
@@ -320,7 +324,7 @@ int main(void)
 					buff[i] = ch;
 				}
 			}
-			//HAL_UART_Transmit(&huart1, buff, num, 500);
+			HAL_UART_Transmit(&huart3, buff, num, 500);
 		} else if (state == 0) {
 
 			sprintf(str, "   ^   ^");
@@ -348,6 +352,28 @@ int main(void)
 			pre_tick = HAL_GetTick();
 			while ((HAL_GetTick() - pre_tick) < 1000)
 				;
+		} else if (state == 4) {
+			state = 1;
+
+			memset(buff, 0, 55);
+			HAL_UART_Transmit(&huart2, (uint8_t*) openCommand, 6, 5000);
+			pre_tick = HAL_GetTick();
+			while ((HAL_GetTick() - pre_tick) < 1000)
+				;
+
+			uint8_t num = uart_available(&uart_rx);
+
+			uint8_t i;
+
+			for (i = 0; i < num; i++) {
+				int ch = pop(&uart_rx);
+				if (ch != -1) {
+					buff[i] = ch;
+				}
+			}
+			btnFlag = 0;
+			HAL_UART_Transmit(&huart3, buff, num, 500);
+
 		}
 
     /* USER CODE END WHILE */
@@ -564,6 +590,39 @@ static void MX_USART2_UART_Init(void)
 }
 
 /**
+  * @brief USART3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART3_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART3_Init 0 */
+
+  /* USER CODE END USART3_Init 0 */
+
+  /* USER CODE BEGIN USART3_Init 1 */
+
+  /* USER CODE END USART3_Init 1 */
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 9600;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART3_Init 2 */
+
+  /* USER CODE END USART3_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -585,6 +644,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_SET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : btn0_Pin */
   GPIO_InitStruct.Pin = btn0_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -604,6 +666,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(OLED_CS_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
