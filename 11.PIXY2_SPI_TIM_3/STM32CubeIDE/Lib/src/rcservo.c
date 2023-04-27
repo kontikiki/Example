@@ -60,7 +60,6 @@ int32_t rcs_setPos(uint8_t channel, uint16_t pos) {
 		//__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_1,g_rcsMinPwm[channel] + newPos);
 
 		HAL_Delay(1);
-
 	} else if(channel == 1) {
 		newPos = ((uint32_t) pos * g_rcsPwmGain[channel]) >> RCS_GAIN_SCALE;
 		//TIM11->CCR1=g_rcsMinPwm[channel] + newPos;
