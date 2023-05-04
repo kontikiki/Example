@@ -7,4 +7,4 @@ stm32f1xx_it.c:144:6:SVC_Handler	1
 stm32f1xx_it.c:157:6:DebugMon_Handler	1
 stm32f1xx_it.c:170:6:PendSV_Handler	1
 stm32f1xx_it.c:183:6:SysTick_Handler	1
-stm32f1xx_it.c:204:6:USART2_IRQHandler	1
+stm32f1xx_it.c:203:6:USART2_IRQHandler	1
