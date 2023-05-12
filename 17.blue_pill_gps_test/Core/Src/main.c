@@ -57,14 +57,17 @@ extern ring_buffer_t uart_rx;
 
 char buff[1024];
 char sentence[256];
-char type[32];
-char time[32];
-char valid[5];
-char latitude[32];
-char NS[32];
-char longitude[32];
-char EW[32];
-char str8[32];
+char type[16];
+char time[16];
+char valid[4];
+char latitude[16];
+char NS[4];
+char longitude[16];
+char EW[4];
+char groundSpeed[16];
+//char str8[18];
+
+int btnFlag = 0;
 
 /* USER CODE END PV */
 
@@ -74,18 +77,13 @@ static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_SPI1_Init(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-extern uint8_t u8x8_stm32_gpio_and_delay(u8x8_t *u8x8, uint8_t msg,
-		uint8_t arg_int, void *arg_ptr);
-extern uint8_t u8x8_byte_stm32_hw_spi(u8x8_t *u8x8, uint8_t msg,
-		uint8_t arg_int, void *arg_ptr);
-
-static u8g2_t u8g2;
 
 int __io_putchar(int ch) {
 	(void) HAL_UART_Transmit(&huart1, (uint8_t*) &ch, 1, 100);
@@ -141,6 +139,13 @@ double calc_distance(double lat1, double lon1, double lat2, double lon2) {
 	 */
 
 }
+
+extern uint8_t u8x8_stm32_gpio_and_delay(u8x8_t *u8x8, uint8_t msg,
+		uint8_t arg_int, void *arg_ptr);
+extern uint8_t u8x8_byte_stm32_hw_spi(u8x8_t *u8x8, uint8_t msg,
+		uint8_t arg_int, void *arg_ptr);
+
+static u8g2_t u8g2;
 /* USER CODE END 0 */
 
 /**
@@ -159,8 +164,12 @@ int main(void) {
 	double f_seconds = 0.0;
 	double time_interval = 0.0;
 	double speed = 0.0;
+	double ground_speed = 0.0;
 
 	char str_buff[32];
+	char str_buff2[32];
+	char str_buff3[32];
+	char str_buff4[32];
 	/* USER CODE END 1 */
 
 	/* MCU Configuration--------------------------------------------------------*/
@@ -184,6 +193,9 @@ int main(void) {
 	MX_USART1_UART_Init();
 	MX_USART2_UART_Init();
 	MX_SPI1_Init();
+
+	/* Initialize interrupts */
+	MX_NVIC_Init();
 	/* USER CODE BEGIN 2 */
 	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2, U8G2_R0, u8x8_byte_stm32_hw_spi,
 			u8x8_stm32_gpio_and_delay);
@@ -191,298 +203,363 @@ int main(void) {
 	u8g2_InitDisplay(&u8g2);
 	u8g2_SetPowerSave(&u8g2, 0);
 
-	u8g2_SetFont(&u8g2, u8g2_font_5x7_tr);
-//  	u8g2_SetDisplayRotation(&u8g2, U8G2_R2);
+	//u8g2_SetFont(&u8g2, u8g2_font_5x7_tr);
+	u8g2_SetFont(&u8g2, u8g2_font_6x13_mr);
+
+	u8g2_SetDisplayRotation(&u8g2, U8G2_R2);
 
 	/* Enable the UART Error Interrupt: (Frame error, noise error, overrun error) */
 	__HAL_UART_ENABLE_IT(&huart2, UART_IT_ERR);
 	/* Enable the UART Data Register not empty Interrupt */
 	__HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
-
 	rxBufferInit(&uart_rx);
 
 	printf("this is MAIN code, not WHILE\r\n");
+
+	sprintf(str_buff, "Hello :)");
+	sprintf(str_buff2, "Push button,");
+	sprintf(str_buff3, "Get speed.");
+	u8g2_FirstPage(&u8g2);
+	do {
+
+		u8g2_DrawStr(&u8g2, 2, 15, str_buff);
+		u8g2_DrawStr(&u8g2, 2, 30, str_buff2);
+		u8g2_DrawStr(&u8g2, 2, 45, str_buff3);
+
+	} while (u8g2_NextPage(&u8g2));
+
+	memset(str_buff, 0, sizeof(str_buff));
+	memset(str_buff, 0, sizeof(str_buff2));
+	memset(str_buff, 0, sizeof(str_buff3));
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+
 	while (1) {
 
+		sprintf(str_buff, "Speed: %.3f km/h", speed);
+		sprintf(str_buff2, "Distance: %.3f m", distance);
+		sprintf(str_buff3, "Time interval: %.2f s",time_interval);
+		sprintf(str_buff4, "Gnd Speed: %.3f km/h", ground_speed);
+
+		u8g2_FirstPage(&u8g2);
+		do {
+
+			u8g2_DrawStr(&u8g2, 2, 15, str_buff);
+			u8g2_DrawStr(&u8g2, 2, 30, str_buff2);
+			u8g2_DrawStr(&u8g2, 2, 45, str_buff3);
+			u8g2_DrawStr(&u8g2, 2, 60, str_buff4);
+
+		} while (u8g2_NextPage(&u8g2));
+
+		memset(str_buff, 0, sizeof(str_buff));
+		memset(str_buff, 0, sizeof(str_buff2));
+		memset(str_buff, 0, sizeof(str_buff3));
+		memset(str_buff, 0, sizeof(str_buff4));
+
+		/*
 		uint32_t tick = HAL_GetTick();
 		while ((HAL_GetTick() - tick) < 500)
 			;
-
-		uint8_t num = uart_available(&uart_rx);
-		uint8_t i;
-		for (i = 0; i < num; i++) {
-			int ch = pop(&uart_rx);
-			if (ch != -1) {
-				buff[i] = ch;
-			}
-		}
-
-		//		HAL_UART_Transmit(&huart1, buff, sizeof(buff), 500);
-
-		int k = 0;
-		char *ptr = buff;
-
-		while (((*ptr) != '$') && (k < sizeof(buff))) {
-			k++;
-			ptr++;
-		}
-
-		if ((*ptr) == '$') {
-			int n = 0;
-			char *ptr1 = sentence;
-
-			while (((*ptr) != '*') && (n < sizeof(buff) - k - 1)) {
-				memcpy(ptr1, ptr, 1);
-				//HAL_UART_Transmit(&huart1,ptr1,1,500);
-				ptr1++;
-				ptr++;
-				n++;
-			}
-
-			memcpy(ptr1, "\n", 1);
-
-			HAL_UART_Transmit(&huart1, (uint8_t*) sentence, n + 1, 500);
-			HAL_UART_Transmit(&huart1, (uint8_t*) "sentence\r\n", 11, 500);
-			HAL_UART_Transmit(&huart1, (uint8_t*) "\r", 1, 500);
-			HAL_UART_Transmit(&huart1, (uint8_t*) "\n", 1, 500);
-			//printf("\r\n");
-
-			if ((sentence[1] == 'G') && (sentence[2] == 'P')) {
-				if ((sentence[3] == 'R') && (sentence[4] == 'M')) {
-
-					char *ptr2 = type;
-					ptr1 = sentence;
-					int n2 = 0;
-					while ((*ptr1) != ',') {
-						memcpy(ptr2, ptr1, 1);
-						ptr2++;
-						ptr1++;
-						n2++;
-					}
-
-					memcpy(ptr2, "\0", 1);
-
-					HAL_UART_Transmit(&huart1, (uint8_t*) type, n2 + 1, 500);
-
-					HAL_UART_Transmit(&huart1, (uint8_t*) "\r", 1, 500);
-					HAL_UART_Transmit(&huart1, (uint8_t*) "\n", 1, 500);
-
-					ptr1++;
-
-					char *ptr3 = time;
-
-					int n3 = 0;
-					while ((*ptr1) != ',') {
-						memcpy(ptr3, ptr1, 1);
-
-						ptr3++;
-						ptr1++;
-						n3++;
-					}
-
-					memcpy(ptr3, "\0", 1);
-
-					if (n3 == 9) {
-						char hour[5] = { 0, };
-						char minute[5] = { 0, };
-						char second[10] = { 0, };
-
-						memcpy(hour, time, 2);
-						memcpy(&hour[2], "\0", 1);
-
-						memcpy(minute, &time[2], 2);
-						memcpy(&minute[2], "\0", 1);
-
-						memcpy(second, &time[4], 5);
-						memcpy(&second[5], "\0", 1);
-
-						f_seconds = (atof(hour) * 60.0 * 60.0)
-								+ (atof(minute) * 60.0) + (atof(second));
-
-						printf("pre_time : %.2f\r\n", pre_time);
-
-						printf("f_seconds : %.2f\r\n", f_seconds);
-
-						if (pre_time == 0) {
-							time_interval = 0.0;
-						} else {
-							time_interval = f_seconds - pre_time;
-						}
-						printf("time_interval : %.2f\r\n", time_interval);
-
-						pre_time = f_seconds;
-						printf("pre_time 2 : %.2f\r\n", pre_time);
-					}
-
-					HAL_UART_Transmit(&huart1, (uint8_t*) time, n3 + 1, 500);
-
-					HAL_UART_Transmit(&huart1, (uint8_t*) "\r", 1, 500);
-					HAL_UART_Transmit(&huart1, (uint8_t*) "\n", 1, 500);
-
-					ptr1++;
-
-					char *ptr4 = valid;
-
-					int n4 = 0;
-					while ((*ptr1) != ',') {
-						memcpy(ptr4, ptr1, 1);
-						ptr4++;
-						ptr1++;
-						n4++;
-					}
-
-					memcpy(ptr4, "\0", 1);
-
-					HAL_UART_Transmit(&huart1, (uint8_t*) valid, n4 + 1, 500);
-
-					printf("\r\n");
-
-					ptr1++;
-
-					char *ptr5 = latitude;
-
-					int n5 = 0;
-					while ((*ptr1) != ',') {
-						memcpy(ptr5, ptr1, 1);
-
-						ptr5++;
-						ptr1++;
-						n5++;
-					}
-
-					memcpy(ptr5, "\0", 1);
-
-					if (n5 == 10) {
-						double f_latitude = atof(latitude);
-						if (f_latitude > 0) {
-							double degree_latitude = (f_latitude / 100.0);
-
-							double minute_latitude = f_latitude
-									- ((degree_latitude) * 100.0);
-							double minute2degree_latitude = minute_latitude
-									/ 60.000;
-							f_latitude2 = degree_latitude
-									+ minute2degree_latitude;
-
-							printf("latitude: %.7f\r\n", f_latitude2);
-						}
-					}
-
-					//HAL_UART_Transmit(&huart1, (uint8_t*)latitude, n5+1, 500);
-
-					ptr1++;
-
-					char *ptr6 = NS;
-
-					int n6 = 0;
-					while ((*ptr1) != ',') {
-						memcpy(ptr6, ptr1, 1);
-						ptr6++;
-						ptr1++;
-						n6++;
-					}
-
-					memcpy(ptr6, "\0", 1);
-
-					HAL_UART_Transmit(&huart1, (uint8_t*) NS, n6 + 1, 500);
-
-					printf("\r\n");
-					ptr1++;
-
-					char *ptr7 = longitude;
-
-					int n7 = 0;
-					while ((*ptr1) != ',') {
-						memcpy(ptr7, ptr1, 1);
-						ptr7++;
-						ptr1++;
-						n7++;
-					}
-
-					memcpy(ptr7, "\0", 1);
-
-					if (n7 == 11) {
-						double f_longitude = atof(longitude);
-						if (f_longitude > 0) {
-							double degree_longitude = (f_longitude / 100.0);
-							double minute_longitude = f_longitude
-									- ((degree_longitude) * 100.0);
-							double minute2degree_longitude = minute_longitude
-									/ 60.0;
-							f_longitude2 = degree_longitude
-									+ minute2degree_longitude;
-
-							printf("longitude: %.7f\r\n", f_longitude2);
-						}
-					}
-
-					//HAL_UART_Transmit(&huart1, (uint8_t*)longitude, n7+1, 500);
-
-					ptr1++;
-
-					char *ptr8 = EW;
-
-					int n8 = 0;
-					while ((*ptr1) != ',') {
-						memcpy(ptr8, ptr1, 1);
-						ptr8++;
-						ptr1++;
-						n8++;
-					}
-
-					memcpy(ptr8, "\0", 1);
-
-					HAL_UART_Transmit(&huart1, (uint8_t*) EW, n8 + 1, 500);
-
-					printf("\r\n");
-
-
-					if ((f_latitude1 == 0) && (f_longitude1 == 0)) {
-						f_latitude1 = f_latitude2;
-						f_longitude1 = f_longitude2;
-					}
-
-					if (time_interval >= 0.500 && f_latitude1 > 0) {
-
-							distance = calc_distance(f_latitude1, f_longitude1,
-									f_latitude2, f_longitude2);
-
-						printf("distance : %.7f\r\n", distance);
-
-						f_latitude1 = f_latitude2;
-						f_longitude1 = f_longitude2;
-						if (distance == 0) {
-							speed = 0.0;
-						} else {
-							speed = distance / time_interval;
-						}
-
-					}
-					printf("speed : %.7f\r\n", speed);
+			*/
+
+		int n = 0;
+		char *ptr;
+		char *ptr1;
+
+		while ((*ptr) != '\n') {
+			uint8_t num = 0;
+			num = uart_available(&uart_rx);
+			for (int i = 0; i < num; i++) {
+				int ch = pop(&uart_rx);
+				if (ch != -1) {
+					buff[i] = ch;
 				}
 			}
-			sprintf(str_buff, "SPEED : %.3f", speed);
-			u8g2_FirstPage(&u8g2);
-			do {
-				u8g2_DrawStrX2(&u8g2, 5, 30, str_buff);
 
-			} while (u8g2_NextPage(&u8g2));
+			int k = 0;
+			ptr = buff;
 
-			memset(sentence, 0, sizeof(sentence));
+			while (((*ptr) != '$') && (k < sizeof(buff))) {
+				k++;
+				ptr++;
+			}
 
-			memset(type, 0, sizeof(type));
-			memset(time, 0, sizeof(time));
-			memset(latitude, 0, sizeof(latitude));
-			memset(NS, 0, sizeof(NS));
-			memset(longitude, 0, sizeof(longitude));
-			memset(EW, 0, sizeof(EW));
+			if ((*ptr) == '$') {
+
+				ptr1 = sentence;
+				while (((*ptr) != '\n') && (k < sizeof(buff))) {
+					memcpy(ptr1, ptr, 1);
+					//HAL_UART_Transmit(&huart1,ptr1,1,500);
+					ptr1++;
+					ptr++;
+					n++;
+					k++;
+				}
+			}
+		}
+		memcpy(ptr1, "\0", 1);
+
+		HAL_UART_Transmit(&huart1, (uint8_t*) sentence, sizeof(sentence), 500);
+		HAL_UART_Transmit(&huart1, (uint8_t*) "\n", 1, 500);
+		HAL_UART_Transmit(&huart1, (uint8_t*) "sentence\r\n", 11, 500);
+		HAL_UART_Transmit(&huart1, (uint8_t*) "\r", 1, 500);
+		HAL_UART_Transmit(&huart1, (uint8_t*) "\n", 1, 500);
+		//printf("\r\n");
+
+		if ((sentence[1] == 'G') && (sentence[2] == 'P')) {
+			if (((sentence[3] == 'R') && (sentence[4] == 'M'))) {
+				char *ptr2 = type;
+				ptr1 = sentence;
+				int n2 = 0;
+				while ((*ptr1) != ',') {
+					memcpy(ptr2, ptr1, 1);
+					ptr2++;
+					ptr1++;
+					n2++;
+				}
+
+				memcpy(ptr2, "\0", 1);
+
+				HAL_UART_Transmit(&huart1, (uint8_t*) type, n2 + 1, 500);
+
+				HAL_UART_Transmit(&huart1, (uint8_t*) "\r", 1, 500);
+				HAL_UART_Transmit(&huart1, (uint8_t*) "\n", 1, 500);
+
+				ptr1++;
+
+				char *ptr3 = time;
+
+				int n3 = 0;
+				while ((*ptr1) != ',') {
+					memcpy(ptr3, ptr1, 1);
+
+					ptr3++;
+					ptr1++;
+					n3++;
+				}
+
+				memcpy(ptr3, "\0", 1);
+
+				if (n3 == 9) {
+					char hour[5] = { 0, };
+					char minute[5] = { 0, };
+					char second[10] = { 0, };
+
+					memcpy(hour, time, 2);
+					memcpy(&hour[2], "\0", 1);
+
+					memcpy(minute, &time[2], 2);
+					memcpy(&minute[2], "\0", 1);
+
+					memcpy(second, &time[4], 5);
+					memcpy(&second[5], "\0", 1);
+
+					f_seconds = (atof(hour) * 60.0 * 60.0)
+							+ (atof(minute) * 60.0) + (atof(second));
+
+					printf("pre_time : %.2f\r\n", pre_time);
+
+					printf("f_seconds : %.2f\r\n", f_seconds);
+
+					if (pre_time == 0) {
+						time_interval = 0.0;
+					} else {
+						time_interval = f_seconds - pre_time;
+					}
+
+					printf("time_interval : %.2f\r\n", time_interval);
+
+					pre_time = f_seconds;
+				}
+
+				HAL_UART_Transmit(&huart1, (uint8_t*) time, n3 + 1, 500);
+
+				HAL_UART_Transmit(&huart1, (uint8_t*) "\r", 1, 500);
+				HAL_UART_Transmit(&huart1, (uint8_t*) "\n", 1, 500);
+
+				ptr1++;
+
+				char *ptr4 = valid;
+
+				int n4 = 0;
+				while ((*ptr1) != ',') {
+					memcpy(ptr4, ptr1, 1);
+					ptr4++;
+					ptr1++;
+					n4++;
+				}
+
+				memcpy(ptr4, "\0", 1);
+
+				HAL_UART_Transmit(&huart1, (uint8_t*) valid, n4 + 1, 500);
+
+				printf("\r\n");
+
+				ptr1++;
+
+				char *ptr5 = latitude;
+
+				int n5 = 0;
+				while ((*ptr1) != ',') {
+					memcpy(ptr5, ptr1, 1);
+
+					ptr5++;
+					ptr1++;
+					n5++;
+				}
+
+				memcpy(ptr5, "\0", 1);
+
+				if (n5 == 10) {
+					double f_latitude = atof(latitude);
+					if (f_latitude > 0) {
+						double degree_latitude = (f_latitude / 100.0);
+
+						double minute_latitude = f_latitude
+								- ((degree_latitude) * 100.0);
+						double minute2degree_latitude = minute_latitude
+								/ 60.000;
+						f_latitude2 = degree_latitude + minute2degree_latitude;
+
+						printf("latitude: %.7f\r\n", f_latitude2);
+					}
+				}
+
+				//HAL_UART_Transmit(&huart1, (uint8_t*)latitude, n5+1, 500);
+
+				ptr1++;
+
+				char *ptr6 = NS;
+
+				int n6 = 0;
+				while ((*ptr1) != ',') {
+					memcpy(ptr6, ptr1, 1);
+					ptr6++;
+					ptr1++;
+					n6++;
+				}
+
+				memcpy(ptr6, "\0", 1);
+
+				HAL_UART_Transmit(&huart1, (uint8_t*) NS, n6 + 1, 500);
+
+				printf("\r\n");
+				ptr1++;
+
+				char *ptr7 = longitude;
+
+				int n7 = 0;
+				while ((*ptr1) != ',') {
+					memcpy(ptr7, ptr1, 1);
+					ptr7++;
+					ptr1++;
+					n7++;
+				}
+
+				memcpy(ptr7, "\0", 1);
+
+				if (n7 == 11) {
+					double f_longitude = atof(longitude);
+					if (f_longitude > 0) {
+						double degree_longitude = (f_longitude / 100.0);
+						double minute_longitude = f_longitude
+								- ((degree_longitude) * 100.0);
+						double minute2degree_longitude = minute_longitude
+								/ 60.0;
+						f_longitude2 = degree_longitude
+								+ minute2degree_longitude;
+
+						printf("longitude: %.7f\r\n", f_longitude2);
+					}
+				}
+
+				//HAL_UART_Transmit(&huart1, (uint8_t*)longitude, n7+1, 500);
+
+				ptr1++;
+
+				char *ptr8 = EW;
+
+				int n8 = 0;
+				while ((*ptr1) != ',') {
+					memcpy(ptr8, ptr1, 1);
+					ptr8++;
+					ptr1++;
+					n8++;
+				}
+
+				memcpy(ptr8, "\0", 1);
+
+				HAL_UART_Transmit(&huart1, (uint8_t*) EW, n8 + 1, 500);
+
+				printf("\r\n");
+
+				ptr1++;
+
+				char *ptr9 = groundSpeed;
+
+				int n9 = 0;
+				while ((*ptr1) != ',') {
+					memcpy(ptr9, ptr1, 1);
+
+					ptr9++;
+					ptr1++;
+					n9++;
+				}
+
+				memcpy(ptr9, "\0", 1);
+
+				if (n9 == 5) {
+					ground_speed = (atof(groundSpeed))*1.852;
+				}
+
+				HAL_UART_Transmit(&huart1, (uint8_t*) groundSpeed, n9 + 1, 500);
+
+				printf("\r\n");
+
+				if ((f_latitude1 == 0) && (f_longitude1 == 0)) {
+					f_latitude1 = f_latitude2;
+					f_longitude1 = f_longitude2;
+				}
+
+				if (time_interval >= 0.500 && f_latitude1 > 0) {
+
+					distance = calc_distance(f_latitude1, f_longitude1,
+							f_latitude2, f_longitude2);
+
+					printf("distance : %.7f\r\n", distance);
+
+					f_latitude1 = f_latitude2;
+					f_longitude1 = f_longitude2;
+					if (distance == 0) {
+						speed = 0.0;
+					} else {
+						speed = (distance*0.001*3600.0) / time_interval;
+					}
+
+				}
+				printf("speed : %.7f\r\n", speed);
+				printf("ground_speed : %.7f\r\n", ground_speed);
+
+			}
 
 		}
+		memset(sentence, 0, sizeof(sentence));
+
+		memset(type, 0, sizeof(type));
+		memset(time, 0, sizeof(time));
+		memset(latitude, 0, sizeof(latitude));
+		memset(NS, 0, sizeof(NS));
+		memset(longitude, 0, sizeof(longitude));
+		memset(EW, 0, sizeof(EW));
+		memset(groundSpeed,0,sizeof(groundSpeed));
+
+//		}
+
 		memset(buff, 0, sizeof(buff));
+
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
@@ -528,6 +605,19 @@ void SystemClock_Config(void) {
 }
 
 /**
+ * @brief NVIC Configuration.
+ * @retval None
+ */
+static void MX_NVIC_Init(void) {
+	/* USART2_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(USART2_IRQn);
+	/* EXTI0_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+}
+
+/**
  * @brief SPI1 Initialization Function
  * @param None
  * @retval None
@@ -544,12 +634,12 @@ static void MX_SPI1_Init(void) {
 	/* SPI1 parameter configuration*/
 	hspi1.Instance = SPI1;
 	hspi1.Init.Mode = SPI_MODE_MASTER;
-	hspi1.Init.Direction = SPI_DIRECTION_1LINE;
+	hspi1.Init.Direction = SPI_DIRECTION_2LINES;
 	hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
 	hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
 	hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
 	hspi1.Init.NSS = SPI_NSS_SOFT;
-	hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+	hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
 	hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
 	hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
 	hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -646,6 +736,12 @@ static void MX_GPIO_Init(void) {
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_SET);
 
+	/*Configure GPIO pin : btn0_Pin */
+	GPIO_InitStruct.Pin = btn0_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(btn0_GPIO_Port, &GPIO_InitStruct);
+
 	/*Configure GPIO pins : OLED_RST_Pin OLED_DC_Pin */
 	GPIO_InitStruct.Pin = OLED_RST_Pin | OLED_DC_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -665,7 +761,16 @@ static void MX_GPIO_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	if (GPIO_Pin == btn0_Pin) {
+		if (btnFlag == 0) {
+			btnFlag = 1;
+		} else if (btnFlag == 1) {
+			btnFlag = 0;
+		}
 
+	}
+}
 /* USER CODE END 4 */
 
 /**

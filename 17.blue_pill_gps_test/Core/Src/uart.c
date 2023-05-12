@@ -8,7 +8,7 @@
 #include "uart.h"
 
 ring_buffer_t uart_rx={{0},0,0};
-extern UART_HandleTypeDef huart2;
+//extern UART_HandleTypeDef huart2;
 
 void rxBufferInit(ring_buffer_t *uart) {
 	uart->head = 0;

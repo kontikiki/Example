@@ -1,0 +1,8 @@
+u8x8_d_ssd1306_128x64_noname.c:254:16:u8x8_d_ssd1306_sh1106_generic	8
+u8x8_d_ssd1306_128x64_noname.c:359:9:u8x8_d_ssd1306_128x64_noname	4
+u8x8_d_ssd1306_128x64_noname.c:380:9:u8x8_d_ssd1312_128x64_noname	7
+u8x8_d_ssd1306_128x64_noname.c:412:9:u8x8_d_ssd1306_128x64_vcomh0	4
+u8x8_d_ssd1306_128x64_noname.c:433:9:u8x8_d_ssd1306_128x64_alt0	4
+u8x8_d_ssd1306_128x64_noname.c:479:9:u8x8_d_sh1106_128x64_noname	4
+u8x8_d_ssd1306_128x64_noname.c:503:9:u8x8_d_sh1106_128x64_vcomh0	4
+u8x8_d_ssd1306_128x64_noname.c:524:9:u8x8_d_sh1106_128x64_winstar	4

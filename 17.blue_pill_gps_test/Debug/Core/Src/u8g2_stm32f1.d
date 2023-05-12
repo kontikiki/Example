@@ -23,8 +23,8 @@ Core/Src/u8g2_stm32f1.o: ../Core/Src/u8g2_stm32f1.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- C:/Users/user/STM32CubeIDE/workspace_1.11.2/blue_pill_gps_test/u8g2/u8g2.h \
- C:/Users/user/STM32CubeIDE/workspace_1.11.2/blue_pill_gps_test/u8g2/u8x8.h
+ C:/Users/user/STM32Cube/Example/17.blue_pill_gps_test/u8g2/u8g2.h \
+ C:/Users/user/STM32Cube/Example/17.blue_pill_gps_test/u8g2/u8x8.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -50,5 +50,5 @@ Core/Src/u8g2_stm32f1.o: ../Core/Src/u8g2_stm32f1.c ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
-C:/Users/user/STM32CubeIDE/workspace_1.11.2/blue_pill_gps_test/u8g2/u8g2.h:
-C:/Users/user/STM32CubeIDE/workspace_1.11.2/blue_pill_gps_test/u8g2/u8x8.h:
+C:/Users/user/STM32Cube/Example/17.blue_pill_gps_test/u8g2/u8g2.h:
+C:/Users/user/STM32Cube/Example/17.blue_pill_gps_test/u8g2/u8x8.h:

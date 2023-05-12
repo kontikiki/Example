@@ -1,0 +1,7 @@
+u8x8_d_ssd1320.c:79:17:u8x8_ssd1320_8to32	5
+u8x8_d_ssd1320.c:108:9:u8x8_d_ssd1320_common	8
+u8x8_d_ssd1320.c:185:17:u8x8_ssd1320_8to32_2	5
+u8x8_d_ssd1320.c:214:9:u8x8_d_ssd1320_common_2	8
+u8x8_d_ssd1320.c:370:9:u8x8_d_ssd1320_160x32	6
+u8x8_d_ssd1320.c:574:9:u8x8_d_ssd1320_160x132	6
+u8x8_d_ssd1320.c:690:9:u8x8_d_ssd1320_160x80	7
