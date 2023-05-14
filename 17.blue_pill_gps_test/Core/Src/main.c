@@ -55,18 +55,6 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 extern ring_buffer_t uart_rx;
 
-char buff[1024];
-char sentence[256];
-char type[16];
-char time[16];
-char valid[4];
-char latitude[16];
-char NS[4];
-char longitude[16];
-char EW[4];
-char groundSpeed[16];
-//char str8[18];
-
 int btnFlag = 0;
 
 /* USER CODE END PV */
@@ -170,6 +158,18 @@ int main(void) {
 	char str_buff2[32];
 	char str_buff3[32];
 	char str_buff4[32];
+
+	char buff[1024];
+	char sentence[256];
+	char type[16];
+	char time[16];
+	char valid[4];
+	char latitude[16];
+	char NS[4];
+	char longitude[16];
+	char EW[4];
+	char groundSpeed[16];
+	//char str8[18];
 	/* USER CODE END 1 */
 
 	/* MCU Configuration--------------------------------------------------------*/
@@ -241,7 +241,7 @@ int main(void) {
 
 		sprintf(str_buff, "Speed: %.3f km/h", speed);
 		sprintf(str_buff2, "Distance: %.3f m", distance);
-		sprintf(str_buff3, "Time interval: %.2f s",time_interval);
+		sprintf(str_buff3, "Time interval: %.2f s", time_interval);
 		sprintf(str_buff4, "Gnd Speed: %.3f km/h", ground_speed);
 
 		u8g2_FirstPage(&u8g2);
@@ -259,47 +259,45 @@ int main(void) {
 		memset(str_buff, 0, sizeof(str_buff3));
 		memset(str_buff, 0, sizeof(str_buff4));
 
-		/*
 		uint32_t tick = HAL_GetTick();
 		while ((HAL_GetTick() - tick) < 500)
 			;
-			*/
 
 		int n = 0;
 		char *ptr;
 		char *ptr1;
 
-		while ((*ptr) != '\n') {
-			uint8_t num = 0;
-			num = uart_available(&uart_rx);
-			for (int i = 0; i < num; i++) {
-				int ch = pop(&uart_rx);
-				if (ch != -1) {
-					buff[i] = ch;
-				}
-			}
-
-			int k = 0;
-			ptr = buff;
-
-			while (((*ptr) != '$') && (k < sizeof(buff))) {
-				k++;
-				ptr++;
-			}
-
-			if ((*ptr) == '$') {
-
-				ptr1 = sentence;
-				while (((*ptr) != '\n') && (k < sizeof(buff))) {
-					memcpy(ptr1, ptr, 1);
-					//HAL_UART_Transmit(&huart1,ptr1,1,500);
-					ptr1++;
-					ptr++;
-					n++;
-					k++;
-				}
+//		while ((*ptr) != '\n') {
+		uint8_t num = 0;
+		num = uart_available(&uart_rx);
+		for (int i = 0; i < num; i++) {
+			int ch = pop(&uart_rx);
+			if (ch != -1) {
+				buff[i] = ch;
 			}
 		}
+
+		int k = 0;
+		ptr = buff;
+
+		while (((*ptr) != '$') && (k < sizeof(buff))) {
+			k++;
+			ptr++;
+		}
+
+		if ((*ptr) == '$') {
+
+			ptr1 = sentence;
+			while (((*ptr) != '\n') && (k < sizeof(buff))) {
+				memcpy(ptr1, ptr, 1);
+				//HAL_UART_Transmit(&huart1,ptr1,1,500);
+				ptr1++;
+				ptr++;
+				n++;
+				k++;
+			}
+		}
+		//	}
 		memcpy(ptr1, "\0", 1);
 
 		HAL_UART_Transmit(&huart1, (uint8_t*) sentence, sizeof(sentence), 500);
@@ -512,7 +510,7 @@ int main(void) {
 				memcpy(ptr9, "\0", 1);
 
 				if (n9 == 5) {
-					ground_speed = (atof(groundSpeed))*1.852;
+					ground_speed = (atof(groundSpeed)) * 1.852;
 				}
 
 				HAL_UART_Transmit(&huart1, (uint8_t*) groundSpeed, n9 + 1, 500);
@@ -536,7 +534,7 @@ int main(void) {
 					if (distance == 0) {
 						speed = 0.0;
 					} else {
-						speed = (distance*0.001*3600.0) / time_interval;
+						speed = (distance * 0.001 * 3600.0) / time_interval;
 					}
 
 				}
@@ -554,7 +552,7 @@ int main(void) {
 		memset(NS, 0, sizeof(NS));
 		memset(longitude, 0, sizeof(longitude));
 		memset(EW, 0, sizeof(EW));
-		memset(groundSpeed,0,sizeof(groundSpeed));
+		memset(groundSpeed, 0, sizeof(groundSpeed));
 
 //		}
 
