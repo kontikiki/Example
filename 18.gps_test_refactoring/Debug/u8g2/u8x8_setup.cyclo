@@ -1,0 +1,4 @@
+u8x8_setup.c:40:9:u8x8_dummy_cb	1
+u8x8_setup.c:73:9:u8x8_d_null_cb	3
+u8x8_setup.c:95:6:u8x8_SetupDefaults	1
+u8x8_setup.c:133:6:u8x8_Setup	1

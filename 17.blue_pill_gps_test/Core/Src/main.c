@@ -267,7 +267,6 @@ int main(void) {
 		char *ptr;
 		char *ptr1;
 
-//		while ((*ptr) != '\n') {
 		uint8_t num = 0;
 		num = uart_available(&uart_rx);
 		for (int i = 0; i < num; i++) {
@@ -414,10 +413,10 @@ int main(void) {
 				if (n5 == 10) {
 					double f_latitude = atof(latitude);
 					if (f_latitude > 0) {
-						double degree_latitude = (f_latitude / 100.0);
+						int degree_latitude = ((int)f_latitude / 100);
 
 						double minute_latitude = f_latitude
-								- ((degree_latitude) * 100.0);
+								- ((double)(degree_latitude) * 100.0);
 						double minute2degree_latitude = minute_latitude
 								/ 60.000;
 						f_latitude2 = degree_latitude + minute2degree_latitude;
@@ -462,9 +461,9 @@ int main(void) {
 				if (n7 == 11) {
 					double f_longitude = atof(longitude);
 					if (f_longitude > 0) {
-						double degree_longitude = (f_longitude / 100.0);
+						int degree_longitude = ((int)f_longitude / 100);
 						double minute_longitude = f_longitude
-								- ((degree_longitude) * 100.0);
+								- ((double)(degree_longitude) * 100.0);
 						double minute2degree_longitude = minute_longitude
 								/ 60.0;
 						f_longitude2 = degree_longitude

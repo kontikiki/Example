@@ -1,0 +1,12 @@
+main.c:76:5:__io_putchar	1
+main.c:81:8:deg2rad	1
+main.c:85:8:rad2deg	1
+main.c:89:8:calc_distance	3
+main.c:143:5:main	31
+main.c:571:6:SystemClock_Config	3
+main.c:607:13:MX_NVIC_Init	1
+main.c:621:13:MX_SPI1_Init	2
+main.c:657:13:MX_USART1_UART_Init	2
+main.c:688:13:MX_USART2_UART_Init	2
+main.c:719:13:MX_GPIO_Init	1
+main.c:778:6:Error_Handler	1

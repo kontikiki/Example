@@ -1,0 +1,5 @@
+u8x8_d_max7219.c:106:16:u8x8_d_max7219_generic	6
+u8x8_d_max7219.c:195:9:u8x8_d_max7219_32x8	6
+u8x8_d_max7219.c:250:9:u8x8_d_max7219_16x16	6
+u8x8_d_max7219.c:297:9:u8x8_d_max7219_8x8	6
+u8x8_d_max7219.c:438:9:u8x8_d_max7219_64x8	6

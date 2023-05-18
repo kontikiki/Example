@@ -1,0 +1,6 @@
+u8x8_d_ssd1322.c:93:17:u8x8_ssd1322_8to32	5
+u8x8_d_ssd1322.c:123:17:u8x8_ssd1322_4to32	4
+u8x8_d_ssd1322.c:150:9:u8x8_d_ssd1322_common	8
+u8x8_d_ssd1322.c:303:9:u8x8_d_ssd1322_nhd_256x64	6
+u8x8_d_ssd1322.c:342:9:u8x8_d_ssd1322_common2	8
+u8x8_d_ssd1322.c:527:9:u8x8_d_ssd1322_nhd_128x64	6

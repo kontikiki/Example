@@ -1,0 +1,5 @@
+u8x8_d_st7528.c:90:17:u8x8_st7528_8to32	2
+u8x8_d_st7528.c:109:16:u8x8_d_st7528_generic	9
+u8x8_d_st7528.c:189:13:u8x8_d_st7528_graylevel_init	2
+u8x8_d_st7528.c:291:9:u8x8_d_st7528_nhd_c160100	3
+u8x8_d_st7528.c:444:9:u8x8_d_st7528_erc16064	3

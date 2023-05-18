@@ -1,8 +1,8 @@
-../Core/Src/main.c:88:5:__io_putchar	16	static
-../Core/Src/main.c:93:8:deg2rad	16	static
-../Core/Src/main.c:97:8:rad2deg	16	static
-../Core/Src/main.c:101:8:calc_distance	88	static
-../Core/Src/main.c:155:5:main	408	static
+../Core/Src/main.c:76:5:__io_putchar	16	static
+../Core/Src/main.c:81:8:deg2rad	16	static
+../Core/Src/main.c:85:8:rad2deg	16	static
+../Core/Src/main.c:89:8:calc_distance	88	static
+../Core/Src/main.c:143:5:main	1784	static
 ../Core/Src/main.c:573:6:SystemClock_Config	72	static
 ../Core/Src/main.c:609:13:MX_NVIC_Init	8	static
 ../Core/Src/main.c:623:13:MX_SPI1_Init	8	static

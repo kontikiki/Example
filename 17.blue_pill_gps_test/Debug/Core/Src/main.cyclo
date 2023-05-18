@@ -1,8 +1,8 @@
-main.c:88:5:__io_putchar	1
-main.c:93:8:deg2rad	1
-main.c:97:8:rad2deg	1
-main.c:101:8:calc_distance	3
-main.c:155:5:main	35
+main.c:76:5:__io_putchar	1
+main.c:81:8:deg2rad	1
+main.c:85:8:rad2deg	1
+main.c:89:8:calc_distance	3
+main.c:143:5:main	35
 main.c:573:6:SystemClock_Config	3
 main.c:609:13:MX_NVIC_Init	1
 main.c:623:13:MX_SPI1_Init	2
