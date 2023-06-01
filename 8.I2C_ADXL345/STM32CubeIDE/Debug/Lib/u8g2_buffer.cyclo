@@ -1,0 +1,13 @@
+u8g2_buffer.c:40:6:u8g2_ClearBuffer	1
+u8g2_buffer.c:51:13:u8g2_send_tile_row	1
+u8g2_buffer.c:72:13:u8g2_send_buffer	3
+u8g2_buffer.c:93:6:u8g2_SendBuffer	1
+u8g2_buffer.c:100:6:u8g2_SetBufferCurrTileRow	1
+u8g2_buffer.c:107:6:u8g2_FirstPage	2
+u8g2_buffer.c:116:9:u8g2_NextPage	3
+u8g2_buffer.c:153:6:u8g2_UpdateDisplayArea	3
+u8g2_buffer.c:178:6:u8g2_UpdateDisplay	1
+u8g2_buffer.c:187:6:u8g2_WriteBufferPBM	1
+u8g2_buffer.c:193:6:u8g2_WriteBufferXBM	1
+u8g2_buffer.c:202:6:u8g2_WriteBufferPBM2	1
+u8g2_buffer.c:208:6:u8g2_WriteBufferXBM2	1

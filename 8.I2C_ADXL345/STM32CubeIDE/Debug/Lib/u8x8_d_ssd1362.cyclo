@@ -1,0 +1,6 @@
+u8x8_d_ssd1362.c:74:17:u8x8_ssd1362_8to32	5
+u8x8_d_ssd1362.c:105:17:u8x8_ssd1362_8to24	5
+u8x8_d_ssd1362.c:136:9:u8x8_d_ssd1362_common	8
+u8x8_d_ssd1362.c:210:9:u8x8_d_ssd1362_common_0_75	9
+u8x8_d_ssd1362.c:392:9:u8x8_d_ssd1362_256x64	6
+u8x8_d_ssd1362.c:505:9:u8x8_d_ssd1362_206x36	6

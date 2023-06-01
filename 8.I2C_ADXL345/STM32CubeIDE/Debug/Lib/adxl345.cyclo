@@ -1,0 +1,5 @@
+adxl345.c:14:6:singleByteWrite	1
+adxl345.c:23:6:multiDataRead	1
+adxl345.c:35:10:singleByteRead	1
+adxl345.c:43:8:ADXL345Init	2
+adxl345.c:65:6:accelAverage	2

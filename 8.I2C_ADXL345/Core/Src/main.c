@@ -169,7 +169,7 @@ int main(void) {
 	point[8].y = 33;
 
 	for (int i = 0; i < 9; i++) {
-		u8g2_DrawPixel(&u8g2, point[0].x, point[0].y);
+		u8g2_DrawPixel(&u8g2, point[i].x, point[i].y);
 	}
 
 	while (1) {

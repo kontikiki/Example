@@ -1,5 +1,5 @@
-../Lib/adxl345.c:13:6:singleByteWrite	24	static
-../Lib/adxl345.c:22:6:multiDataRead	32	static
-../Lib/adxl345.c:34:10:singleByteRead	24	static
-../Lib/adxl345.c:42:8:ADXL345Init	16	static
-../Lib/adxl345.c:64:6:accelAverage	24	static
+../Lib/adxl345.c:14:6:singleByteWrite	24	static
+../Lib/adxl345.c:23:6:multiDataRead	32	static
+../Lib/adxl345.c:35:10:singleByteRead	24	static
+../Lib/adxl345.c:43:8:ADXL345Init	16	static
+../Lib/adxl345.c:65:6:accelAverage	24	static

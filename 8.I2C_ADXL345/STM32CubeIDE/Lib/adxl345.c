@@ -5,6 +5,7 @@
  *      Author: user
  */
 #include "adxl345.h"
+#include "stdio.h"
 
 extern I2C_HandleTypeDef hi2c1;
 uint8_t data[10];

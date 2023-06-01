@@ -1,0 +1,9 @@
+main.c:82:5:__io_putchar	1
+main.c:99:5:main	10
+main.c:248:6:SystemClock_Config	4
+main.c:296:13:MX_NVIC_Init	1
+main.c:307:13:MX_I2C1_Init	4
+main.c:352:13:MX_SPI2_Init	2
+main.c:388:13:MX_USART1_UART_Init	2
+main.c:419:13:MX_GPIO_Init	1
+main.c:449:6:Error_Handler	1

@@ -1,0 +1,7 @@
+u8g2_hvline.c:61:16:u8g2_clip_intersection2	7
+u8g2_hvline.c:132:6:u8g2_draw_hv_line_2dir	1
+u8g2_hvline.c:150:6:u8g2_DrawHVLine	13
+u8g2_hvline.c:203:6:u8g2_DrawHLine	1
+u8g2_hvline.c:212:6:u8g2_DrawVLine	1
+u8g2_hvline.c:221:6:u8g2_DrawPixel	5
+u8g2_hvline.c:249:6:u8g2_SetDrawColor	2

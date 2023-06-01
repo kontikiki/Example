@@ -1,0 +1,8 @@
+../Core/Src/ILI9341_GFX.c:5:22:DelayUs	16	static
+../Core/Src/ILI9341_GFX.c:11:6:ILI9341_DrawHollowCircle	48	static
+../Core/Src/ILI9341_GFX.c:46:6:ILI9341_DrawFilledCircle	56	static
+../Core/Src/ILI9341_GFX.c:82:6:ILI9341_DrawHollowRectangleCoord	40	static
+../Core/Src/ILI9341_GFX.c:128:6:ILI9341_DrawFilledRectangleCoord	48	static
+../Core/Src/ILI9341_GFX.c:170:6:ILI9341_DrawChar	64	static
+../Core/Src/ILI9341_GFX.c:201:6:ILI9341_DrawText	48	static
+../Core/Src/ILI9341_GFX.c:229:6:ILI9341_DrawImage	24	static
