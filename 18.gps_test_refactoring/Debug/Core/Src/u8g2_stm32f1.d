@@ -22,6 +22,8 @@ Core/Src/u8g2_stm32f1.o: ../Core/Src/u8g2_stm32f1.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  C:/Users/user/STM32CubeIDE/workspace_1.11.2/gps_test_refactoring/u8g2/u8g2.h \
  C:/Users/user/STM32CubeIDE/workspace_1.11.2/gps_test_refactoring/u8g2/u8x8.h
@@ -49,6 +51,8 @@ Core/Src/u8g2_stm32f1.o: ../Core/Src/u8g2_stm32f1.c ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h:
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 C:/Users/user/STM32CubeIDE/workspace_1.11.2/gps_test_refactoring/u8g2/u8g2.h:
 C:/Users/user/STM32CubeIDE/workspace_1.11.2/gps_test_refactoring/u8g2/u8x8.h:
