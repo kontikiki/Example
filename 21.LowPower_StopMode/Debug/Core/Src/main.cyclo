@@ -1,0 +1,8 @@
+main.c:63:6:HAL_RTCEx_WakeUpTimerEventCallback	1
+main.c:70:6:HAL_GPIO_EXTI_Callback	2
+main.c:84:5:main	2
+main.c:153:6:SystemClock_Config	4
+main.c:204:13:MX_RTC_Init	4
+main.c:275:13:MX_USART1_UART_Init	2
+main.c:306:13:MX_GPIO_Init	1
+main.c:348:6:Error_Handler	1
