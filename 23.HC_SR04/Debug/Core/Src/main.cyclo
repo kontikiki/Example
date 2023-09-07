@@ -1,0 +1,10 @@
+main.c:73:6:delay_us	2
+main.c:82:5:__io_putchar	1
+main.c:87:6:HAL_TIM_IC_CaptureCallback	5
+main.c:110:5:main	1
+main.c:173:6:SystemClock_Config	3
+main.c:210:13:MX_TIM1_Init	7
+main.c:268:13:MX_TIM2_Init	4
+main.c:310:13:MX_USART2_UART_Init	2
+main.c:341:13:MX_GPIO_Init	1
+main.c:372:6:Error_Handler	1
