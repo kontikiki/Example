@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (10.3-2021.10)
+# Toolchain: GNU Tools for STM32 (11.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -60,8 +60,8 @@ all: main-build
 main-build: UART_RingBuffer_Register_copy.elf secondary-outputs
 
 # Tool invocations
-UART_RingBuffer_Register_copy.elf UART_RingBuffer_Register_copy.map: $(OBJS) $(USER_OBJS) C:\Users\user\STM32CubeIDE\workspace_1.11.2\UART_RingBuffer_Register_copy\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "UART_RingBuffer_Register_copy.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\user\STM32CubeIDE\workspace_1.11.2\UART_RingBuffer_Register_copy\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="UART_RingBuffer_Register_copy.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+UART_RingBuffer_Register_copy.elf UART_RingBuffer_Register_copy.map: $(OBJS) $(USER_OBJS) C:\Users\user\STM32Cube\Example\14.UART_RingBuffer_Register_copy\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "UART_RingBuffer_Register_copy.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\user\STM32Cube\Example\14.UART_RingBuffer_Register_copy\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="UART_RingBuffer_Register_copy.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

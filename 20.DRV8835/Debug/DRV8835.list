@@ -27,23 +27,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00007d6f  00000000  00000000  00020035  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 0000143f  00000000  00000000  00027da4  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000930  00000000  00000000  000291e8  2**3
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000888  00000000  00000000  00029b18  2**3
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  000165c0  00000000  00000000  0002a3a0  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00009540  00000000  00000000  00040960  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008400f  00000000  00000000  00049ea0  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  000cdeaf  2**0
+ 12 .comment      00000043  00000000  00000000  00020035  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000025e0  00000000  00000000  000cdf00  2**2
+ 13 .debug_info   000076fe  00000000  00000000  00020078  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_abbrev 000014b3  00000000  00000000  00027776  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_aranges 00000930  00000000  00000000  00028c30  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_rnglists 0000071a  00000000  00000000  00029560  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .debug_macro  000165f0  00000000  00000000  00029c7a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 18 .debug_line   00009ab9  00000000  00000000  0004026a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 19 .debug_str    000840df  00000000  00000000  00049d23  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 20 .debug_frame  000025e0  00000000  00000000  000cde04  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 21 .debug_line_str 00000059  00000000  00000000  000d03e4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -132,11 +134,11 @@ int main(void)
  800017e:	f000 fe19 	bl	8000db4 <HAL_GPIO_WritePin>
 	  							GPIO_PIN_SET);
 	  		HAL_GPIO_WritePin(MOTOR2_PHASE_GPIO_Port, MOTOR2_PHASE_Pin,
- 8000182:	2200      	movs	r2, #0
+ 8000182:	2201      	movs	r2, #1
  8000184:	f44f 5180 	mov.w	r1, #4096	; 0x1000
  8000188:	4831      	ldr	r0, [pc, #196]	; (8000250 <main+0x104>)
  800018a:	f000 fe13 	bl	8000db4 <HAL_GPIO_WritePin>
-	  					GPIO_PIN_RESET);
+	  					GPIO_PIN_SET);
 
 
 	  			for (int i = 0; i < 50; i++) {
@@ -198,11 +200,11 @@ int main(void)
  80001e6:	f000 fde5 	bl	8000db4 <HAL_GPIO_WritePin>
 	  								GPIO_PIN_RESET);
 	  			HAL_GPIO_WritePin(MOTOR2_PHASE_GPIO_Port, MOTOR2_PHASE_Pin,
- 80001ea:	2201      	movs	r2, #1
+ 80001ea:	2200      	movs	r2, #0
  80001ec:	f44f 5180 	mov.w	r1, #4096	; 0x1000
  80001f0:	4817      	ldr	r0, [pc, #92]	; (8000250 <main+0x104>)
  80001f2:	f000 fddf 	bl	8000db4 <HAL_GPIO_WritePin>
-	  					GPIO_PIN_SET);
+	  					GPIO_PIN_RESET);
 
 	  			for (int i = 0; i < 50; i++) {
  80001f6:	2300      	movs	r3, #0
@@ -275,7 +277,7 @@ void SystemClock_Config(void)
  800025e:	2228      	movs	r2, #40	; 0x28
  8000260:	2100      	movs	r1, #0
  8000262:	4618      	mov	r0, r3
- 8000264:	f001 ffe8 	bl	8002238 <memset>
+ 8000264:	f001 ffc3 	bl	80021ee <memset>
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
  8000268:	1d3b      	adds	r3, r7, #4
  800026a:	2200      	movs	r2, #0
@@ -401,7 +403,7 @@ static void MX_TIM1_Init(void)
  8000314:	2220      	movs	r2, #32
  8000316:	2100      	movs	r1, #0
  8000318:	4618      	mov	r0, r3
- 800031a:	f001 ff8d 	bl	8002238 <memset>
+ 800031a:	f001 ff68 	bl	80021ee <memset>
 
   /* USER CODE BEGIN TIM1_Init 1 */
 
@@ -779,8 +781,8 @@ static void MX_GPIO_Init(void)
  8000554:	f000 fc2e 	bl	8000db4 <HAL_GPIO_WritePin>
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(MOTOR2_PHASE_GPIO_Port, MOTOR2_PHASE_Pin, GPIO_PIN_SET);
- 8000558:	2201      	movs	r2, #1
+  HAL_GPIO_WritePin(MOTOR2_PHASE_GPIO_Port, MOTOR2_PHASE_Pin, GPIO_PIN_RESET);
+ 8000558:	2200      	movs	r2, #0
  800055a:	f44f 5180 	mov.w	r1, #4096	; 0x1000
  800055e:	480c      	ldr	r0, [pc, #48]	; (8000590 <MX_GPIO_Init+0x88>)
  8000560:	f000 fc28 	bl	8000db4 <HAL_GPIO_WritePin>
@@ -1335,7 +1337,7 @@ LoopFillZerobss:
 
 /* Call static constructors */
     bl __libc_init_array
- 80007b6:	f001 fd1b 	bl	80021f0 <__libc_init_array>
+ 80007b6:	f001 fd23 	bl	8002200 <__libc_init_array>
 /* Call the application's entry point.*/
   bl main
  80007ba:	f7ff fcc7 	bl	800014c <main>
@@ -4625,16 +4627,17 @@ HAL_StatusTypeDef HAL_TIM_ConfigClockSource(TIM_HandleTypeDef *htim, const TIM_C
       TIM_ETR_SetConfig(htim->Instance,
  8001a5e:	687b      	ldr	r3, [r7, #4]
  8001a60:	6818      	ldr	r0, [r3, #0]
+                        sClockSourceConfig->ClockPrescaler,
  8001a62:	683b      	ldr	r3, [r7, #0]
  8001a64:	6899      	ldr	r1, [r3, #8]
+                        sClockSourceConfig->ClockPolarity,
  8001a66:	683b      	ldr	r3, [r7, #0]
  8001a68:	685a      	ldr	r2, [r3, #4]
+                        sClockSourceConfig->ClockFilter);
  8001a6a:	683b      	ldr	r3, [r7, #0]
  8001a6c:	68db      	ldr	r3, [r3, #12]
+      TIM_ETR_SetConfig(htim->Instance,
  8001a6e:	f000 facc 	bl	800200a <TIM_ETR_SetConfig>
-                        sClockSourceConfig->ClockPrescaler,
-                        sClockSourceConfig->ClockPolarity,
-                        sClockSourceConfig->ClockFilter);
 
       /* Select the External clock mode1 and the ETRF trigger */
       tmpsmcr = htim->Instance->SMCR;
@@ -4662,16 +4665,17 @@ HAL_StatusTypeDef HAL_TIM_ConfigClockSource(TIM_HandleTypeDef *htim, const TIM_C
       TIM_ETR_SetConfig(htim->Instance,
  8001a8c:	687b      	ldr	r3, [r7, #4]
  8001a8e:	6818      	ldr	r0, [r3, #0]
+                        sClockSourceConfig->ClockPrescaler,
  8001a90:	683b      	ldr	r3, [r7, #0]
  8001a92:	6899      	ldr	r1, [r3, #8]
+                        sClockSourceConfig->ClockPolarity,
  8001a94:	683b      	ldr	r3, [r7, #0]
  8001a96:	685a      	ldr	r2, [r3, #4]
+                        sClockSourceConfig->ClockFilter);
  8001a98:	683b      	ldr	r3, [r7, #0]
  8001a9a:	68db      	ldr	r3, [r3, #12]
+      TIM_ETR_SetConfig(htim->Instance,
  8001a9c:	f000 fab5 	bl	800200a <TIM_ETR_SetConfig>
-                        sClockSourceConfig->ClockPrescaler,
-                        sClockSourceConfig->ClockPolarity,
-                        sClockSourceConfig->ClockFilter);
       /* Enable the External clock mode2 */
       htim->Instance->SMCR |= TIM_SMCR_ECE;
  8001aa0:	687b      	ldr	r3, [r7, #4]
@@ -4691,14 +4695,15 @@ HAL_StatusTypeDef HAL_TIM_ConfigClockSource(TIM_HandleTypeDef *htim, const TIM_C
       TIM_TI1_ConfigInputStage(htim->Instance,
  8001ab2:	687b      	ldr	r3, [r7, #4]
  8001ab4:	6818      	ldr	r0, [r3, #0]
+                               sClockSourceConfig->ClockPolarity,
  8001ab6:	683b      	ldr	r3, [r7, #0]
  8001ab8:	6859      	ldr	r1, [r3, #4]
+                               sClockSourceConfig->ClockFilter);
  8001aba:	683b      	ldr	r3, [r7, #0]
  8001abc:	68db      	ldr	r3, [r3, #12]
+      TIM_TI1_ConfigInputStage(htim->Instance,
  8001abe:	461a      	mov	r2, r3
  8001ac0:	f000 fa2c 	bl	8001f1c <TIM_TI1_ConfigInputStage>
-                               sClockSourceConfig->ClockPolarity,
-                               sClockSourceConfig->ClockFilter);
       TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_TI1);
  8001ac4:	687b      	ldr	r3, [r7, #4]
  8001ac6:	681b      	ldr	r3, [r3, #0]
@@ -4715,14 +4720,15 @@ HAL_StatusTypeDef HAL_TIM_ConfigClockSource(TIM_HandleTypeDef *htim, const TIM_C
       TIM_TI2_ConfigInputStage(htim->Instance,
  8001ad2:	687b      	ldr	r3, [r7, #4]
  8001ad4:	6818      	ldr	r0, [r3, #0]
+                               sClockSourceConfig->ClockPolarity,
  8001ad6:	683b      	ldr	r3, [r7, #0]
  8001ad8:	6859      	ldr	r1, [r3, #4]
+                               sClockSourceConfig->ClockFilter);
  8001ada:	683b      	ldr	r3, [r7, #0]
  8001adc:	68db      	ldr	r3, [r3, #12]
+      TIM_TI2_ConfigInputStage(htim->Instance,
  8001ade:	461a      	mov	r2, r3
  8001ae0:	f000 fa4a 	bl	8001f78 <TIM_TI2_ConfigInputStage>
-                               sClockSourceConfig->ClockPolarity,
-                               sClockSourceConfig->ClockFilter);
       TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_TI2);
  8001ae4:	687b      	ldr	r3, [r7, #4]
  8001ae6:	681b      	ldr	r3, [r3, #0]
@@ -4739,14 +4745,15 @@ HAL_StatusTypeDef HAL_TIM_ConfigClockSource(TIM_HandleTypeDef *htim, const TIM_C
       TIM_TI1_ConfigInputStage(htim->Instance,
  8001af2:	687b      	ldr	r3, [r7, #4]
  8001af4:	6818      	ldr	r0, [r3, #0]
+                               sClockSourceConfig->ClockPolarity,
  8001af6:	683b      	ldr	r3, [r7, #0]
  8001af8:	6859      	ldr	r1, [r3, #4]
+                               sClockSourceConfig->ClockFilter);
  8001afa:	683b      	ldr	r3, [r7, #0]
  8001afc:	68db      	ldr	r3, [r3, #12]
+      TIM_TI1_ConfigInputStage(htim->Instance,
  8001afe:	461a      	mov	r2, r3
  8001b00:	f000 fa0c 	bl	8001f1c <TIM_TI1_ConfigInputStage>
-                               sClockSourceConfig->ClockPolarity,
-                               sClockSourceConfig->ClockFilter);
       TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_TI1ED);
  8001b04:	687b      	ldr	r3, [r7, #4]
  8001b06:	681b      	ldr	r3, [r3, #0]
@@ -6108,47 +6115,47 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigBreakDeadTime(TIM_HandleTypeDef *htim,
  80021e8:	46bd      	mov	sp, r7
  80021ea:	bc80      	pop	{r7}
  80021ec:	4770      	bx	lr
+
+080021ee <memset>:
+ 80021ee:	4603      	mov	r3, r0
+ 80021f0:	4402      	add	r2, r0
+ 80021f2:	4293      	cmp	r3, r2
+ 80021f4:	d100      	bne.n	80021f8 <memset+0xa>
+ 80021f6:	4770      	bx	lr
+ 80021f8:	f803 1b01 	strb.w	r1, [r3], #1
+ 80021fc:	e7f9      	b.n	80021f2 <memset+0x4>
 	...
 
-080021f0 <__libc_init_array>:
- 80021f0:	b570      	push	{r4, r5, r6, lr}
- 80021f2:	2600      	movs	r6, #0
- 80021f4:	4d0c      	ldr	r5, [pc, #48]	; (8002228 <__libc_init_array+0x38>)
- 80021f6:	4c0d      	ldr	r4, [pc, #52]	; (800222c <__libc_init_array+0x3c>)
- 80021f8:	1b64      	subs	r4, r4, r5
- 80021fa:	10a4      	asrs	r4, r4, #2
- 80021fc:	42a6      	cmp	r6, r4
- 80021fe:	d109      	bne.n	8002214 <__libc_init_array+0x24>
- 8002200:	f000 f822 	bl	8002248 <_init>
- 8002204:	2600      	movs	r6, #0
- 8002206:	4d0a      	ldr	r5, [pc, #40]	; (8002230 <__libc_init_array+0x40>)
- 8002208:	4c0a      	ldr	r4, [pc, #40]	; (8002234 <__libc_init_array+0x44>)
- 800220a:	1b64      	subs	r4, r4, r5
- 800220c:	10a4      	asrs	r4, r4, #2
- 800220e:	42a6      	cmp	r6, r4
- 8002210:	d105      	bne.n	800221e <__libc_init_array+0x2e>
- 8002212:	bd70      	pop	{r4, r5, r6, pc}
- 8002214:	f855 3b04 	ldr.w	r3, [r5], #4
- 8002218:	4798      	blx	r3
- 800221a:	3601      	adds	r6, #1
- 800221c:	e7ee      	b.n	80021fc <__libc_init_array+0xc>
- 800221e:	f855 3b04 	ldr.w	r3, [r5], #4
- 8002222:	4798      	blx	r3
- 8002224:	3601      	adds	r6, #1
- 8002226:	e7f2      	b.n	800220e <__libc_init_array+0x1e>
- 8002228:	08002284 	.word	0x08002284
- 800222c:	08002284 	.word	0x08002284
- 8002230:	08002284 	.word	0x08002284
- 8002234:	08002288 	.word	0x08002288
-
-08002238 <memset>:
- 8002238:	4603      	mov	r3, r0
- 800223a:	4402      	add	r2, r0
- 800223c:	4293      	cmp	r3, r2
- 800223e:	d100      	bne.n	8002242 <memset+0xa>
- 8002240:	4770      	bx	lr
- 8002242:	f803 1b01 	strb.w	r1, [r3], #1
- 8002246:	e7f9      	b.n	800223c <memset+0x4>
+08002200 <__libc_init_array>:
+ 8002200:	b570      	push	{r4, r5, r6, lr}
+ 8002202:	2600      	movs	r6, #0
+ 8002204:	4d0c      	ldr	r5, [pc, #48]	; (8002238 <__libc_init_array+0x38>)
+ 8002206:	4c0d      	ldr	r4, [pc, #52]	; (800223c <__libc_init_array+0x3c>)
+ 8002208:	1b64      	subs	r4, r4, r5
+ 800220a:	10a4      	asrs	r4, r4, #2
+ 800220c:	42a6      	cmp	r6, r4
+ 800220e:	d109      	bne.n	8002224 <__libc_init_array+0x24>
+ 8002210:	f000 f81a 	bl	8002248 <_init>
+ 8002214:	2600      	movs	r6, #0
+ 8002216:	4d0a      	ldr	r5, [pc, #40]	; (8002240 <__libc_init_array+0x40>)
+ 8002218:	4c0a      	ldr	r4, [pc, #40]	; (8002244 <__libc_init_array+0x44>)
+ 800221a:	1b64      	subs	r4, r4, r5
+ 800221c:	10a4      	asrs	r4, r4, #2
+ 800221e:	42a6      	cmp	r6, r4
+ 8002220:	d105      	bne.n	800222e <__libc_init_array+0x2e>
+ 8002222:	bd70      	pop	{r4, r5, r6, pc}
+ 8002224:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8002228:	4798      	blx	r3
+ 800222a:	3601      	adds	r6, #1
+ 800222c:	e7ee      	b.n	800220c <__libc_init_array+0xc>
+ 800222e:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8002232:	4798      	blx	r3
+ 8002234:	3601      	adds	r6, #1
+ 8002236:	e7f2      	b.n	800221e <__libc_init_array+0x1e>
+ 8002238:	08002284 	.word	0x08002284
+ 800223c:	08002284 	.word	0x08002284
+ 8002240:	08002284 	.word	0x08002284
+ 8002244:	08002288 	.word	0x08002288
 
 08002248 <_init>:
  8002248:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
