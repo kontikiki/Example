@@ -106,9 +106,7 @@ int main(void)
 	  HAL_GPIO_WritePin(MOTOR1_PHASE_GPIO_Port, MOTOR1_PHASE_Pin,
 	  							GPIO_PIN_SET);
 	  		HAL_GPIO_WritePin(MOTOR2_PHASE_GPIO_Port, MOTOR2_PHASE_Pin,
-	  					GPIO_PIN_SET);
-
-
+	  					GPIO_PIN_RESET);
 	  			for (int i = 0; i < 50; i++) {
 	  				htim1.Instance->CCR1 = i;
 	  				htim2.Instance->CCR1 = i;
@@ -124,7 +122,7 @@ int main(void)
 	  			HAL_GPIO_WritePin(MOTOR1_PHASE_GPIO_Port, MOTOR1_PHASE_Pin,
 	  								GPIO_PIN_RESET);
 	  			HAL_GPIO_WritePin(MOTOR2_PHASE_GPIO_Port, MOTOR2_PHASE_Pin,
-	  					GPIO_PIN_RESET);
+	  					GPIO_PIN_SET);
 
 	  			for (int i = 0; i < 50; i++) {
 	  				htim1.Instance->CCR1 = i;
@@ -227,7 +225,7 @@ static void MX_TIM1_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 50;
+  sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -333,7 +331,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(MOTOR1_PHASE_GPIO_Port, MOTOR1_PHASE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(MOTOR2_PHASE_GPIO_Port, MOTOR2_PHASE_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(MOTOR2_PHASE_GPIO_Port, MOTOR2_PHASE_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : MOTOR1_PHASE_Pin MOTOR2_PHASE_Pin */
   GPIO_InitStruct.Pin = MOTOR1_PHASE_Pin|MOTOR2_PHASE_Pin;

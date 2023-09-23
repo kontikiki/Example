@@ -61,7 +61,7 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define MOTOR1_PHASE_Pin GPIO_PIN_9
 #define MOTOR1_PHASE_GPIO_Port GPIOA
-#define MOTOR2_PHASE_Pin GPIO_PIN_12
+#define MOTOR2_PHASE_Pin GPIO_PIN_10
 #define MOTOR2_PHASE_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
